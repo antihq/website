@@ -27,6 +27,7 @@
                                     :links="[
                                         ['href' => 'https://github.com/terrific-mx/headshot', 'text' => 'Headshot'],
                                         ['href' => 'https://github.com/terrific-mx/feedback', 'text' => 'Feedback'],
+                                        ['href' => 'https://github.com/terrific-mx/forms', 'text' => 'Forms'],
                                     ]"
                                 />
                                 <x-sitemap
