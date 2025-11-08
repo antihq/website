@@ -2,4 +2,4 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', 'https://fuse.antihq.com');
+Route::redirect('/', 'https://connect.antihq.com');
