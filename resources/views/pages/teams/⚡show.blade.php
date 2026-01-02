@@ -56,7 +56,7 @@ new class extends Component
 };
 ?>
 
-<section class="w-full">
+<section class="mx-auto max-w-6xl">
     <form wire:submit="update" class="w-full max-w-lg space-y-6">
         <flux:input wire:model="name" label="Team name" type="text" required autofocus />
 
