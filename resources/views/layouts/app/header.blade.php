@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark antialiased lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950">
+<html
+    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    class="dark antialiased lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950"
+>
     <head>
         @include('partials.head')
     </head>
@@ -9,7 +12,7 @@
 
             <flux:navbar class="-mb-px max-lg:hidden">
                 <flux:navbar.item :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                    {{ __('Dashboard') }}
+                    Dashboard
                 </flux:navbar.item>
             </flux:navbar>
 
@@ -17,10 +20,7 @@
 
             <!-- Desktop User Menu -->
             <flux:dropdown position="top" align="end">
-                <flux:profile
-                    class="cursor-pointer"
-                    :initials="auth()->user()->initials()"
-                />
+                <flux:profile class="cursor-pointer" :initials="auth()->user()->initials()" />
 
                 <flux:menu>
                     <flux:menu.radio.group>
@@ -45,7 +45,7 @@
                     <flux:menu.separator />
 
                     <flux:menu.radio.group>
-                        <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
+                        <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>Settings</flux:menu.item>
                     </flux:menu.radio.group>
 
                     <flux:menu.separator />
@@ -53,7 +53,7 @@
                     <form method="POST" action="{{ route('logout') }}" class="w-full">
                         @csrf
                         <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full">
-                            {{ __('Log Out') }}
+                            Log Out
                         </flux:menu.item>
                     </form>
                 </flux:menu>
@@ -61,13 +61,22 @@
         </flux:header>
 
         <!-- Mobile Menu -->
-        <flux:sidebar stashable sticky class="border-e border-zinc-200 bg-white lg:hidden dark:border-zinc-700 dark:bg-zinc-900">
+        <flux:sidebar
+            stashable
+            sticky
+            class="border-e border-zinc-200 bg-white lg:hidden dark:border-zinc-700 dark:bg-zinc-900"
+        >
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
             <flux:navlist variant="outline">
                 <flux:navlist.group>
-                    <flux:navlist.item icon="layout-grid" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                      {{ __('Dashboard') }}
+                    <flux:navlist.item
+                        icon="layout-grid"
+                        :href="route('dashboard')"
+                        :current="request()->routeIs('dashboard')"
+                        wire:navigate
+                    >
+                        Dashboard
                     </flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
