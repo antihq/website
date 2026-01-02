@@ -1,7 +1,10 @@
 <?php
 
 use App\Livewire\Actions\Logout;
+use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 new class extends Component
@@ -14,9 +17,29 @@ new class extends Component
             'password' => ['required', 'string', 'current_password'],
         ]);
 
-        tap(Auth::user(), $logout(...))->delete();
+        DB::transaction(function () use ($logout) {
+            $this->deleteTeams();
+            $this->user->deleteProfilePhoto();
+            $this->user->tokens->each->delete();
+            tap($this->user, $logout(...))->delete();
+        });
 
         $this->redirect('/', navigate: true);
+    }
+
+    #[Computed]
+    public function user()
+    {
+        return Auth::user();
+    }
+
+    protected function deleteTeams(): void
+    {
+        $this->user->teams()->detach();
+
+        $this->user->ownedTeams->each(function (Team $team) {
+            $this->deletesTeams->delete($team);
+        });
     }
 };
 ?>

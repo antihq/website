@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Auth\User;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
 use Livewire\Livewire;
@@ -20,14 +20,13 @@ test('api token permissions can be updated', function () {
         'abilities' => ['create', 'read'],
     ]);
 
-    Livewire::test('api-token')
-        ->set(['updateApiTokenForm' => [
+    Livewire::test('api-token', ['token' => $token])
+        ->set([
             'permissions' => [
                 'delete',
                 'missing-permission',
             ],
-        ]])
-        ->call('update');
+        ])->call('update');
 
     expect($user->fresh()->tokens->first()->can('delete'))->toBeTrue();
     expect($user->fresh()->tokens->first()->can('read'))->toBeFalse();
