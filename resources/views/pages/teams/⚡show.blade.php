@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Jetstream\Contracts\UpdatesTeamNames;
 use Livewire\Attributes\Computed;
@@ -7,54 +8,26 @@ use Livewire\Component;
 
 new class extends Component
 {
-    /**
-     * The team instance.
-     *
-     * @var mixed
-     */
-    public $team;
+    public Team $team;
 
-    /**
-     * The component's state.
-     *
-     * @var array
-     */
-    public $state = [];
+    public $name = '';
 
-    /**
-     * Mount the component.
-     *
-     * @param  mixed  $team
-     * @return void
-     */
     public function mount($team)
     {
-        $this->team = $team;
-
-        $this->state = $team->withoutRelations()->toArray();
+        $this->name = $team->name;
     }
 
-    /**
-     * Update the team's name.
-     *
-     * @return void
-     */
     public function updateTeamName(UpdatesTeamNames $updater)
     {
         $this->resetErrorBag();
 
-        $updater->update($this->user, $this->team, $this->state);
+        $updater->update($this->user, $this->team, ['name' => $this->name]);
 
         $this->dispatch('saved');
 
         $this->dispatch('refresh-navigation-menu');
     }
 
-    /**
-     * Get the current user of the application.
-     *
-     * @return mixed
-     */
     #[Computed]
     public function user()
     {

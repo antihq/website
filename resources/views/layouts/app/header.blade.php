@@ -58,6 +58,17 @@
                         </flux:menu.item>
                     </flux:menu.group>
 
+                    <flux:menu.group heading="Team">
+                        <flux:menu.item
+                            :href="route('teams.edit', auth()->user()->currentTeam)"
+                            icon="cog"
+                            icon:variant="micro"
+                            wire:navigate
+                        >
+                            Settings
+                        </flux:menu.item>
+                    </flux:menu.group>
+
                     <form method="POST" action="{{ route('logout') }}" class="w-full">
                         @csrf
                         <flux:menu.item

@@ -1,15 +1,18 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+use function Pest\Laravel\actingAs;
 
-test('team names can be updated', function () {
-    $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+uses(RefreshDatabase::class);
+
+it('can update team names', function () {
+    actingAs($user = User::factory()->withPersonalTeam()->create());
 
     Livewire::test('pages::teams.show', ['team' => $user->currentTeam])
-        ->set(['state' => ['name' => 'Test Team']])
+        ->set('name', 'Test Team')
         ->call('updateTeamName');
 
     expect($user->fresh()->ownedTeams)->toHaveCount(1);
