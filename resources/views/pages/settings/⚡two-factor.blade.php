@@ -62,20 +62,6 @@ new #[Layout('layouts::app')] #[Title('Two Factor Authentication')] class extend
         $this->showModal = true;
     }
 
-    private function loadSetupData(): void
-    {
-        $user = auth()->user();
-
-        try {
-            $this->qrCodeSvg = $user?->twoFactorQrCodeSvg();
-            $this->manualSetupKey = decrypt($user->two_factor_secret);
-        } catch (\Exception) {
-            $this->addError('setupData', 'Failed to fetch setup data.');
-
-            $this->reset('qrCodeSvg', 'manualSetupKey');
-        }
-    }
-
     public function showVerificationIfNecessary(): void
     {
         if ($this->requiresConfirmation) {
@@ -150,6 +136,20 @@ new #[Layout('layouts::app')] #[Title('Two Factor Authentication')] class extend
             'description' => 'To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app.',
             'buttonText' => 'Continue',
         ];
+    }
+
+    private function loadSetupData(): void
+    {
+        $user = auth()->user();
+
+        try {
+            $this->qrCodeSvg = $user?->twoFactorQrCodeSvg();
+            $this->manualSetupKey = decrypt($user->two_factor_secret);
+        } catch (\Exception) {
+            $this->addError('setupData', 'Failed to fetch setup data.');
+
+            $this->reset('qrCodeSvg', 'manualSetupKey');
+        }
     }
 };
 ?>
