@@ -42,7 +42,7 @@ new class extends Component
                 'role' => $this->pull('role'),
             ]);
 
-            Mail::to($this->email)->send(new TeamInvitation($invitation));
+            Mail::to($invitation->email)->send(new TeamInvitation($invitation));
         } else {
             $newTeamMember = Jetstream::findUserByEmailOrFail($this->pull('email'));
 
@@ -288,7 +288,7 @@ new class extends Component
         </div>
     </div>
 
-    @if ($team->owner->id !== $this->user->id && !$team->personal_team)
+    @if ($team->owner->id !== $this->user->id)
         <flux:separator />
 
         <div>
