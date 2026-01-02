@@ -5,14 +5,13 @@ use Laravel\Fortify\Actions\DisableTwoFactorAuthentication;
 use Laravel\Fortify\Actions\EnableTwoFactorAuthentication;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\Response;
 
-new #[Layout('layouts::app')] #[Title('Two Factor Authentication')] class extends Component
+new #[Title('Two Factor Authentication')] class extends Component
 {
     #[Locked]
     public bool $twoFactorEnabled;
@@ -154,53 +153,39 @@ new #[Layout('layouts::app')] #[Title('Two Factor Authentication')] class extend
 };
 ?>
 
-<section class="w-full">
-    @include('partials.settings-heading')
-
-    <x-settings.layout heading="Two Factor Authentication" subheading="Manage your two-factor authentication settings">
-        <div class="mx-auto flex w-full flex-col space-y-6 text-sm" wire:cloak>
-            @if ($twoFactorEnabled)
-                <div class="space-y-4">
-                    <div class="flex items-center gap-3">
-                        <flux:badge color="green">Enabled</flux:badge>
-                    </div>
-
-                    <flux:text>
-                        With two-factor authentication enabled, you will be prompted for a secure, random pin during
-                        login, which you can retrieve from the TOTP-supported application on your phone.
-                    </flux:text>
-
-                    <livewire:settings.two-factor.recovery-codes :$requiresConfirmation />
-
-                    <div class="flex justify-start">
-                        <flux:button
-                            variant="danger"
-                            icon="shield-exclamation"
-                            icon:variant="outline"
-                            wire:click="disable"
-                        >
-                            Disable 2FA
-                        </flux:button>
-                    </div>
+<section class="w-full max-w-lg">
+    <div class="mx-auto flex w-full flex-col space-y-6 text-sm" wire:cloak>
+        @if ($twoFactorEnabled)
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    <flux:badge color="green">Enabled</flux:badge>
                 </div>
-            @else
-                <div class="space-y-4">
-                    <div class="flex items-center gap-3">
-                        <flux:badge color="red">Disabled</flux:badge>
-                    </div>
-
-                    <flux:text variant="subtle">
-                        When you enable two-factor authentication, you will be prompted for a secure pin during login.
-                        This pin can be retrieved from a TOTP-supported application on your phone.
-                    </flux:text>
-
-                    <flux:button variant="primary" icon="shield-check" icon:variant="outline" wire:click="enable">
-                        Enable 2FA
+                <flux:text>
+                    With two-factor authentication enabled, you will be prompted for a secure, random pin during login,
+                    which you can retrieve from the TOTP-supported application on your phone.
+                </flux:text>
+                <livewire:settings.two-factor.recovery-codes :$requiresConfirmation />
+                <div class="flex justify-start">
+                    <flux:button variant="danger" icon="shield-exclamation" icon:variant="outline" wire:click="disable">
+                        Disable 2FA
                     </flux:button>
                 </div>
-            @endif
-        </div>
-    </x-settings.layout>
+            </div>
+        @else
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    <flux:badge color="red">Disabled</flux:badge>
+                </div>
+                <flux:text variant="subtle">
+                    When you enable two-factor authentication, you will be prompted for a secure pin during login. This
+                    pin can be retrieved from a TOTP-supported application on your phone.
+                </flux:text>
+                <flux:button variant="primary" icon="shield-check" icon:variant="outline" wire:click="enable">
+                    Enable 2FA
+                </flux:button>
+            </div>
+        @endif
+    </div>
 
     <flux:modal name="two-factor-setup-modal" class="max-w-md md:min-w-md" @close="closeModal" wire:model="showModal">
         <div class="space-y-6">

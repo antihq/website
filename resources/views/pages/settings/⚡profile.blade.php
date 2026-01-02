@@ -4,11 +4,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Layout('layouts::app')] #[Title('Profile')] class extends Component
+new #[Title('Profile')] class extends Component
 {
     public string $name = '';
 
@@ -65,47 +64,40 @@ new #[Layout('layouts::app')] #[Title('Profile')] class extends Component
 };
 ?>
 
-<section class="w-full">
-    @include('partials.settings-heading')
+<section class="w-ful">
+    <form wire:submit="updateProfileInformation" class="w-full max-w-lg space-y-6">
+        <flux:input wire:model="name" :label="'Name'" type="text" required autofocus autocomplete="name" />
 
-    <x-settings.layout heading="Profile" subheading="Update your name and email address">
-        <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
-            <flux:input wire:model="name" :label="'Name'" type="text" required autofocus autocomplete="name" />
+        <div>
+            <flux:input wire:model="email" :label="'Email'" type="email" required autocomplete="email" />
 
-            <div>
-                <flux:input wire:model="email" :label="'Email'" type="email" required autocomplete="email" />
+            @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&! auth()->user()->hasVerifiedEmail())
+                <div>
+                    <flux:text class="mt-4">
+                        Your email address is unverified.
 
-                @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&! auth()->user()->hasVerifiedEmail())
-                    <div>
-                        <flux:text class="mt-4">
-                            Your email address is unverified.
+                        <flux:link class="cursor-pointer text-sm" wire:click.prevent="resendVerificationNotification">
+                            Click here to re-send the verification email.
+                        </flux:link>
+                    </flux:text>
 
-                            <flux:link
-                                class="cursor-pointer text-sm"
-                                wire:click.prevent="resendVerificationNotification"
-                            >
-                                Click here to re-send the verification email.
-                            </flux:link>
+                    @if (session('status') === 'verification-link-sent')
+                        <flux:text class="!dark:text-green-400 mt-2 font-medium !text-green-600">
+                            A new verification link has been sent to your email address.
                         </flux:text>
-
-                        @if (session('status') === 'verification-link-sent')
-                            <flux:text class="!dark:text-green-400 mt-2 font-medium !text-green-600">
-                                A new verification link has been sent to your email address.
-                            </flux:text>
-                        @endif
-                    </div>
-                @endif
-            </div>
-
-            <div class="flex items-center gap-4">
-                <div class="flex items-center justify-end">
-                    <flux:button variant="primary" type="submit" class="w-full">Save</flux:button>
+                    @endif
                 </div>
+            @endif
+        </div>
 
-                <x-action-message class="me-3" on="profile-updated">Saved.</x-action-message>
+        <div class="flex items-center gap-4">
+            <div class="flex items-center justify-end">
+                <flux:button variant="primary" type="submit" class="w-full">Save</flux:button>
             </div>
-        </form>
 
-        <livewire:settings.delete-user-form />
-    </x-settings.layout>
+            <x-action-message class="me-3" on="profile-updated">Saved.</x-action-message>
+        </div>
+    </form>
+
+    <livewire:settings.delete-user-form />
 </section>
