@@ -6,8 +6,8 @@
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-900 dark:lg:bg-zinc-950">
-        <flux:header class="border-zinc-200 lg:border-b dark:border-zinc-700">
+    <body class="flex min-h-svh w-full flex-col bg-white lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950">
+        <flux:header class="px-6!">
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" size="sm" />
 
             <flux:navbar class="-mb-px max-lg:hidden">
