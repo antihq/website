@@ -11,14 +11,6 @@
             "type": "local",
             "enabled": true,
             "command": ["php", "artisan", "boost:mcp"]
-        },
-        "herd": {
-            "type": "local",
-            "enabled": true,
-            "command": ["php", "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"],
-            "environment": {
-                "SITE_PATH": "/Users/oliver/src/tries/2026-01-01-livewire-starter-kit"
-            }
         }
     },
     "formatter": {
