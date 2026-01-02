@@ -1,3 +1,46 @@
+<?php
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Password as PasswordRule;
+use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
+use Livewire\Component;
+
+new #[Layout('layouts::app')]
+#[Title('Password')]
+class extends Component
+{
+    public string $current_password = '';
+
+    public string $password = '';
+
+    public string $password_confirmation = '';
+
+    public function updatePassword(): void
+    {
+        try {
+            $validated = $this->validate([
+                'current_password' => ['required', 'string', 'current_password'],
+                'password' => ['required', 'string', PasswordRule::defaults(), 'confirmed'],
+            ]);
+        } catch (ValidationException $e) {
+            $this->reset('current_password', 'password', 'password_confirmation');
+
+            throw $e;
+        }
+
+        Auth::user()->update([
+            'password' => $validated['password'],
+        ]);
+
+        $this->reset('current_password', 'password', 'password_confirmation');
+
+        $this->dispatch('password-updated');
+    }
+};
+?>
+
 <section class="w-full">
     @include('partials.settings-heading')
 

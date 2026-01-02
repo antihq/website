@@ -1,9 +1,5 @@
 <?php
 
-use App\Livewire\Settings\Appearance;
-use App\Livewire\Settings\Password;
-use App\Livewire\Settings\Profile;
-use App\Livewire\Settings\TwoFactor;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -18,11 +14,11 @@ Route::view('dashboard', 'dashboard')
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
-    Route::livewire('settings/profile', Profile::class)->name('profile.edit');
-    Route::livewire('settings/password', Password::class)->name('user-password.edit');
-    Route::livewire('settings/appearance', Appearance::class)->name('appearance.edit');
+    Route::livewire('settings/profile', 'pages::settings.profile')->name('profile.edit');
+    Route::livewire('settings/password', 'pages::settings.password')->name('user-password.edit');
+    Route::livewire('settings/appearance', 'pages::settings.appearance')->name('appearance.edit');
 
-    Route::livewire('settings/two-factor', TwoFactor::class)
+    Route::livewire('settings/two-factor', 'pages::settings.two-factor')
         ->middleware(
             when(
                 Features::canManageTwoFactorAuthentication()
