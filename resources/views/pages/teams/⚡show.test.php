@@ -156,7 +156,7 @@ test('users can leave teams', function () {
         ->call('leave');
 
     expect($user->currentTeam->fresh()->users)->toHaveCount(0);
-})->only();
+});
 
 test('team owners cant leave their own team', function () {
     actingAs($user = User::factory()->withPersonalTeam()->create());
@@ -166,4 +166,4 @@ test('team owners cant leave their own team', function () {
         ->assertHasErrors(['team']);
 
     expect($user->currentTeam->fresh())->not->toBeNull();
-})->only();
+});

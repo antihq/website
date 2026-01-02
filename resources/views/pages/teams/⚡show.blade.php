@@ -109,8 +109,6 @@ new class extends Component
 
         $this->authorize('removeTeamMember', $this->team);
 
-        abort_if($this->user->id === $user->id, 403);
-
         $this->ensureUserDoesNotOwnTeam($user);
 
         $this->team->removeUser($user);
@@ -120,8 +118,6 @@ new class extends Component
 
     public function leave()
     {
-        $this->authorize('removeTeamMember', $this->team);
-
         $this->ensureUserDoesNotOwnTeam($this->user);
 
         $this->team->removeUser($this->user);
