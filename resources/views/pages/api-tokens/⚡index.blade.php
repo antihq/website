@@ -20,6 +20,15 @@ new class extends Component
         $this->user->createToken($this->pull('name'), Jetstream::validPermissions($this->pull('permissions')));
     }
 
+    public function delete($tokenId)
+    {
+        $this->user
+            ->tokens()
+            ->where('id', $tokenId)
+            ->first()
+            ->delete();
+    }
+
     #[Computed]
     public function user()
     {
