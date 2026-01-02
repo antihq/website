@@ -1,22 +1,20 @@
 <?php
 
 use App\Models\User;
-use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
 use Livewire\Livewire;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+use function Pest\Laravel\actingAs;
 
 test('team member roles can be updated', function () {
-    $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+    actingAs($user = User::factory()->withPersonalTeam()->create());
 
     $user->currentTeam->users()->attach(
         $otherUser = User::factory()->create(), ['role' => 'admin']
     );
 
-    Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
-        ->set('managingRoleFor', $otherUser)
-        ->set('currentRole', 'editor')
-        ->call('updateRole');
+    Livewire::test('member', ['team' => $user->currentTeam, 'member' => $otherUser])
+        ->set('role', 'editor')
+        ->call('update');
 
     expect($otherUser->fresh()->hasTeamRole(
         $user->currentTeam->fresh(), 'editor'
@@ -30,12 +28,11 @@ test('only team owner can update team member roles', function () {
         $otherUser = User::factory()->create(), ['role' => 'admin']
     );
 
-    $this->actingAs($otherUser);
+    actingAs($otherUser);
 
-    Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
-        ->set('managingRoleFor', $otherUser)
-        ->set('currentRole', 'editor')
-        ->call('updateRole')
+    Livewire::test('member', ['team' => $user->currentTeam, 'member' => $otherUser])
+        ->set('role', 'editor')
+        ->call('update')
         ->assertStatus(403);
 
     expect($otherUser->fresh()->hasTeamRole(
