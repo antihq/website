@@ -2,6 +2,7 @@
 
 use App\Models\Team;
 use App\Models\TeamInvitation as ModelsTeamInvitation;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -10,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 use Laravel\Jetstream\Events\AddingTeamMember;
 use Laravel\Jetstream\Events\InvitingTeamMember;
 use Laravel\Jetstream\Events\TeamMemberAdded;
+use Laravel\Jetstream\Events\TeamMemberRemoved;
 use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Jetstream;
 use Laravel\Jetstream\Mail\TeamInvitation;
@@ -101,6 +103,32 @@ new class extends Component
         }
     }
 
+    public function removeMember($userId)
+    {
+        $user = Jetstream::findUserByIdOrFail($userId);
+
+        $this->authorize('removeTeamMember', $this->team);
+
+        abort_if($this->user->id === $user->id, 403);
+
+        $this->ensureUserDoesNotOwnTeam($user);
+
+        $this->team->removeUser($user);
+
+        TeamMemberRemoved::dispatch($this->team, $user);
+    }
+
+    public function leave()
+    {
+        $this->authorize('removeTeamMember', $this->team);
+
+        $this->ensureUserDoesNotOwnTeam($this->user);
+
+        $this->team->removeUser($this->user);
+
+        return $this->redirectRoute('dashboard');
+    }
+
     #[Computed]
     public function user()
     {
@@ -177,6 +205,13 @@ new class extends Component
                 ->errors()
                 ->addIf($this->team->hasUserWithEmail($this->email), 'email', 'This user already belongs to the team.');
         };
+    }
+
+    protected function ensureUserDoesNotOwnTeam(User $teamMember): void
+    {
+        if ($teamMember->id === $this->team->owner->id) {
+            $this->addError('team', 'You may not leave a team that you created.');
+        }
     }
 };
 ?>

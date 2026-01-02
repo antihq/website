@@ -114,3 +114,56 @@ test('team member invitations can be cancelled', function () {
 
     expect($user->currentTeam->fresh()->teamInvitations)->toHaveCount(0);
 });
+
+test('team members can be removed from teams', function () {
+    actingAs($user = User::factory()->withPersonalTeam()->create());
+
+    $user->currentTeam->users()->attach(
+        $otherUser = User::factory()->create(), ['role' => 'admin']
+    );
+
+    $component = Livewire::test('pages::teams.show', ['team' => $user->currentTeam])
+        ->call('removeMember', $otherUser->id)
+        ->assertHasNoErrors();
+
+    expect($user->currentTeam->fresh()->users)->toHaveCount(0);
+});
+
+test('only team owner can remove team members', function () {
+    $user = User::factory()->withPersonalTeam()->create();
+
+    $user->currentTeam->users()->attach(
+        $otherUser = User::factory()->create(), ['role' => 'admin']
+    );
+
+    actingAs($otherUser);
+
+    Livewire::test('pages::teams.show', ['team' => $user->currentTeam])
+        ->call('removeMember', $user->id)
+        ->assertStatus(403);
+});
+
+test('users can leave teams', function () {
+    $user = User::factory()->withPersonalTeam()->create();
+
+    $user->currentTeam->users()->attach(
+        $otherUser = User::factory()->create(), ['role' => 'admin']
+    );
+
+    actingAs($otherUser);
+
+    Livewire::test('pages::teams.show', ['team' => $user->currentTeam])
+        ->call('leave');
+
+    expect($user->currentTeam->fresh()->users)->toHaveCount(0);
+})->only();
+
+test('team owners cant leave their own team', function () {
+    actingAs($user = User::factory()->withPersonalTeam()->create());
+
+    Livewire::test('pages::teams.show', ['team' => $user->currentTeam])
+        ->call('leave')
+        ->assertHasErrors(['team']);
+
+    expect($user->currentTeam->fresh())->not->toBeNull();
+})->only();
