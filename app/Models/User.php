@@ -4,6 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -23,6 +26,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'current_team_id',
     ];
 
     /**
@@ -36,6 +40,44 @@ class User extends Authenticatable
         'two_factor_recovery_codes',
         'remember_token',
     ];
+
+    public function ownedTeams(): HasMany
+    {
+        return $this->hasMany(Team::class, 'user_id');
+    }
+
+    public function teams(): BelongsToMany
+    {
+        return $this->belongsToMany(Team::class, 'team_user')
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    public function currentTeam(): BelongsTo
+    {
+        return $this->belongsTo(Team::class, 'current_team_id');
+    }
+
+    public function switchTeam(Team $team): void
+    {
+        if (! $this->belongsToMany(Team::class, 'team_user')->where('team_id', $team->id)->exists()) {
+            return;
+        }
+
+        $this->forceFill([
+            'current_team_id' => $team->id,
+        ])->save();
+    }
+
+    public function ownsTeam(Team $team): bool
+    {
+        return $this->id === $team->user_id;
+    }
+
+    public function personalTeam(): ?Team
+    {
+        return $this->ownedTeams()->where('personal_team', true)->first();
+    }
 
     /**
      * Get the user's initials

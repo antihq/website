@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -11,11 +12,6 @@ class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
 
-    /**
-     * Validate and create a newly registered user.
-     *
-     * @param  array<string, string>  $input
-     */
     public function create(array $input): User
     {
         Validator::make($input, [
@@ -30,10 +26,30 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => $input['password'],
         ]);
+
+        $this->createTeam($user);
+
+        return $user;
+    }
+
+    protected function createTeam(User $user): void
+    {
+        $user->ownedTeams()->save(
+            Team::forceCreate([
+                'user_id' => $user->id,
+                'name' => $user->name . "'s Team",
+                'personal_team' => true,
+            ])
+        );
+
+        $team = $user->personalTeam();
+
+        $user->teams()->attach($team, ['role' => 'owner']);
+        $user->switchTeam($team);
     }
 }

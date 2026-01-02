@@ -2,22 +2,30 @@
 
 namespace Database\Seeders;
 
+use App\Models\Team;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->withoutTwoFactor()->create([
+        $user = User::factory()->withoutTwoFactor()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        $user->ownedTeams()->save(
+            Team::forceCreate([
+                'user_id' => $user->id,
+                'name' => $user->name . "'s Team",
+                'personal_team' => true,
+            ])
+        );
+
+        $team = $user->personalTeam();
+
+        $user->teams()->attach($team, ['role' => 'owner']);
+        $user->switchTeam($team);
     }
 }
