@@ -71,7 +71,7 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group>
                     <flux:navlist.item
-                        icon="layout-grid"
+                        icon="home"
                         :href="route('dashboard')"
                         :current="request()->routeIs('dashboard')"
                         wire:navigate
