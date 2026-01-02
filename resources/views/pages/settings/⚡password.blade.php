@@ -38,8 +38,8 @@ new #[Title('Password')] class extends Component
 };
 ?>
 
-<section class="w-full">
-    <form method="POST" wire:submit="updatePassword" class="w-full max-w-lg space-y-6">
+<section class="mx-auto max-w-6xl">
+    <form wire:submit="updatePassword" class="w-full max-w-lg space-y-6">
         <flux:input
             wire:model="current_password"
             :label="'Current password'"

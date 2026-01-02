@@ -153,8 +153,8 @@ new #[Title('Two Factor Authentication')] class extends Component
 };
 ?>
 
-<section class="w-full max-w-lg">
-    <div class="mx-auto flex w-full flex-col space-y-6 text-sm" wire:cloak>
+<section class="mx-auto max-w-6xl">
+    <div class="flex w-full flex-col space-y-6 text-sm max-w-lg" wire:cloak>
         @if ($twoFactorEnabled)
             <div class="space-y-4">
                 <div class="flex items-center gap-3">
