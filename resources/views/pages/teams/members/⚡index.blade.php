@@ -173,11 +173,11 @@ new class extends Component
 ?>
 
 <section class="mx-auto max-w-6xl space-y-10">
-    <flux:heading size="lg">Team Members</flux:heading>
+    <flux:heading size="lg">Team members</flux:heading>
 
     @if (Gate::check('addTeamMember', $team))
         <div>
-            <flux:heading size="md">Add Team Member</flux:heading>
+            <flux:heading size="md">Add team member</flux:heading>
             <flux:text class="mb-6">
                 @if (Features::sendsTeamInvitations())
                     Add a new team member to your team, allowing them to collaborate with you.
@@ -218,7 +218,7 @@ new class extends Component
 
     @if (Features::sendsTeamInvitations() && $team->teamInvitations->isNotEmpty())
         <div>
-            <flux:heading size="md">Pending Invitations</flux:heading>
+            <flux:heading size="md">Pending invitations</flux:heading>
             <flux:text class="mb-6">These people have been invited to your team and haven't accepted yet.</flux:text>
 
             <div class="flex flex-col gap-3">
@@ -248,7 +248,7 @@ new class extends Component
     @endif
 
     <div>
-        <flux:heading size="md">Team Members</flux:heading>
+        <flux:heading size="md">Team members</flux:heading>
         <flux:text class="mb-6">All team members that currently have access to this team.</flux:text>
 
         <div class="flex flex-col gap-3">
@@ -292,7 +292,7 @@ new class extends Component
         <flux:separator />
 
         <div>
-            <flux:heading size="md">Leave Team</flux:heading>
+            <flux:heading size="md">Leave team</flux:heading>
             <flux:text class="mb-6">Are you sure you want to leave this team?</flux:text>
 
             <flux:modal.trigger name="leave-team">

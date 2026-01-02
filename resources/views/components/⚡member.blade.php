@@ -49,7 +49,7 @@ new class extends Component
     <flux:button size="sm" variant="ghost" icon="pencil" tooltip="Change role" />
 
     <flux:menu>
-        <flux:menu.heading>Change Role</flux:menu.heading>
+        <flux:menu.heading>Change role</flux:menu.heading>
         @foreach (\Laravel\Jetstream\Jetstream::$roles as $key => $role)
             @if ($member->teamRole($team)->key === $key)
                 <flux:menu.item wire:click="updateRole('{{ $key }}')" icon="check">{{ $role->name }}</flux:menu.item>
