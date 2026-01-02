@@ -1,15 +1,27 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Livewire;
 
-test('profile page is displayed', function () {
-    $this->actingAs($user = User::factory()->create());
+it('renders successfully', function () {
+    $user = User::factory()->create();
+
+    Auth::login($user);
+
+    Livewire::test('pages::settings.profile')
+        ->assertStatus(200);
+});
+
+it('profile page is displayed', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user);
 
     $this->get('/settings/profile')->assertOk();
 });
 
-test('profile information can be updated', function () {
+it('profile information can be updated', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user);
@@ -28,7 +40,7 @@ test('profile information can be updated', function () {
     expect($user->email_verified_at)->toBeNull();
 });
 
-test('email verification status is unchanged when email address is unchanged', function () {
+it('email verification status is unchanged when email address is unchanged', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user);
@@ -43,7 +55,7 @@ test('email verification status is unchanged when email address is unchanged', f
     expect($user->refresh()->email_verified_at)->not->toBeNull();
 });
 
-test('user can delete their account', function () {
+it('user can delete their account', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user);
@@ -59,7 +71,7 @@ test('user can delete their account', function () {
     expect($user->fresh())->toBeNull();
 });
 
-test('correct password must be provided to delete account', function () {
+it('correct password must be provided to delete account', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user);

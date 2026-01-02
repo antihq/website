@@ -1,10 +1,20 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Livewire;
 
-test('password can be updated', function () {
+it('renders successfully', function () {
+    $user = User::factory()->create();
+
+    Auth::login($user);
+
+    Livewire::test('pages::settings.password')
+        ->assertStatus(200);
+});
+
+it('password can be updated', function () {
     $user = User::factory()->create([
         'password' => Hash::make('password'),
     ]);
@@ -22,7 +32,7 @@ test('password can be updated', function () {
     expect(Hash::check('new-password', $user->refresh()->password))->toBeTrue();
 });
 
-test('correct password must be provided to update password', function () {
+it('correct password must be provided to update password', function () {
     $user = User::factory()->create([
         'password' => Hash::make('password'),
     ]);
