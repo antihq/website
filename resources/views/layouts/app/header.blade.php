@@ -20,39 +20,53 @@
 
             <!-- Desktop User Menu -->
             <flux:dropdown position="top" align="end">
-                <flux:profile class="cursor-pointer" :initials="auth()->user()->initials()" />
+                <flux:profile
+                    class="cursor-pointer"
+                    :initials="auth()->user()->initials()"
+                    avatar:size="xs"
+                    :chevron="false"
+                />
 
                 <flux:menu>
-                    <flux:menu.radio.group>
-                        <div class="p-0 text-sm font-normal">
-                            <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                                <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
-                                    <span
-                                        class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                                    >
-                                        {{ auth()->user()->initials() }}
-                                    </span>
-                                </span>
-
-                                <div class="grid flex-1 text-start text-sm leading-tight">
-                                    <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
-                                    <span class="truncate text-xs">{{ auth()->user()->email }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </flux:menu.radio.group>
-
-                    <flux:menu.separator />
-
-                    <flux:menu.radio.group>
-                        <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>Settings</flux:menu.item>
-                    </flux:menu.radio.group>
-
-                    <flux:menu.separator />
+                    <flux:menu.group heading="Account">
+                        <flux:menu.item :href="route('profile.edit')" icon="user" icon:variant="micro" wire:navigate>
+                            Profile
+                        </flux:menu.item>
+                        <flux:menu.item
+                            :href="route('user-password.edit')"
+                            icon="key"
+                            icon:variant="micro"
+                            wire:navigate
+                        >
+                            Password
+                        </flux:menu.item>
+                        <flux:menu.item
+                            :href="route('two-factor.show')"
+                            icon="shield-check"
+                            icon:variant="micro"
+                            wire:navigate
+                        >
+                            Two-Factor Auth
+                        </flux:menu.item>
+                        <flux:menu.item
+                            :href="route('appearance.edit')"
+                            icon="adjustments-horizontal"
+                            icon:variant="micro"
+                            wire:navigate
+                        >
+                            Appearance
+                        </flux:menu.item>
+                    </flux:menu.group>
 
                     <form method="POST" action="{{ route('logout') }}" class="w-full">
                         @csrf
-                        <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full">
+                        <flux:menu.item
+                            as="button"
+                            type="submit"
+                            icon="arrow-right-start-on-rectangle"
+                            icon:variant="micro"
+                            class="w-full"
+                        >
                             Log Out
                         </flux:menu.item>
                     </form>
