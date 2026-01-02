@@ -27,8 +27,17 @@ new class extends Component
             'role' => ['required', 'string', new Role],
         ]);
 
+        $this->updateRole($this->role);
+    }
+
+    public function updateRole(string $role)
+    {
+        $this->authorize('updateTeamMember', $this->team);
+
+        $this->role = $role;
+
         $this->team->users()->updateExistingPivot($this->member->id, [
-            'role' => $this->role,
+            'role' => $role,
         ]);
 
         TeamMemberUpdated::dispatch($this->team->fresh(), $this->member);
@@ -36,6 +45,17 @@ new class extends Component
 };
 ?>
 
-<div>
-    {{-- I begin to speak only when I am certain what I will say is not better left unsaid. - Cato the Younger --}}
-</div>
+<flux:dropdown align="end">
+    <flux:button size="sm" variant="ghost" icon="pencil" tooltip="Change role" />
+
+    <flux:menu>
+        <flux:menu.heading>Change Role</flux:menu.heading>
+        @foreach (\Laravel\Jetstream\Jetstream::$roles as $key => $role)
+            @if ($member->teamRole($team)->key === $key)
+                <flux:menu.item wire:click="updateRole('{{ $key }}')" icon="check">{{ $role->name }}</flux:menu.item>
+            @else
+                <flux:menu.item wire:click="updateRole('{{ $key }}')">{{ $role->name }}</flux:menu.item>
+            @endif
+        @endforeach
+    </flux:menu>
+</flux:dropdown>

@@ -172,6 +172,151 @@ new class extends Component
 };
 ?>
 
-<div>
-    {{-- Waste no more time arguing what a good man should be, be one. - Marcus Aurelius --}}
-</div>
+<section class="mx-auto max-w-6xl space-y-10">
+    <flux:heading size="lg">Team Members</flux:heading>
+
+    @if (Gate::check('addTeamMember', $team))
+        <div>
+            <flux:heading size="md">Add Team Member</flux:heading>
+            <flux:text class="mb-6">
+                @if (Features::sendsTeamInvitations())
+                    Add a new team member to your team, allowing them to collaborate with you.
+                @else
+                    Add a new team member to your team by their email address.
+                @endif
+            </flux:text>
+
+            <form wire:submit="addMember" class="w-full max-w-lg space-y-6">
+                <flux:field>
+                    <flux:label>Email</flux:label>
+                    <flux:input wire:model="email" type="email" required autofocus placeholder="john@example.com" />
+                    <flux:error name="email" />
+                </flux:field>
+
+                @if (\Laravel\Jetstream\Jetstream::hasRoles())
+                    <flux:field>
+                        <flux:label>Role</flux:label>
+                        <flux:select wire:model="role" placeholder="Select a role">
+                            @foreach (\Laravel\Jetstream\Jetstream::$roles as $key => $role)
+                                <flux:select.option value="{{ $key }}">{{ $role->name }}</flux:select.option>
+                            @endforeach
+                        </flux:select>
+                        <flux:error name="role" />
+                    </flux:field>
+                @endif
+
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center justify-end">
+                        <flux:button variant="primary" type="submit" class="w-full">Add Member</flux:button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <flux:separator />
+    @endif
+
+    @if (Features::sendsTeamInvitations() && $team->teamInvitations->isNotEmpty())
+        <div>
+            <flux:heading size="md">Pending Invitations</flux:heading>
+            <flux:text class="mb-6">These people have been invited to your team and haven't accepted yet.</flux:text>
+
+            <div class="flex flex-col gap-3">
+                @foreach ($team->teamInvitations as $invitation)
+                    <flux:card class="flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <flux:avatar circle size="md" initials="{{ Str::substr($invitation->email, 0, 1) }}" />
+                            <div>
+                                <flux:heading size="sm">{{ $invitation->email }}</flux:heading>
+                                @if (\Laravel\Jetstream\Jetstream::hasRoles())
+                                    <flux:text class="text-sm">{{ \Laravel\Jetstream\Jetstream::findRole($invitation->role)?->name }}</flux:text>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            @if (Gate::check('removeTeamMember', $team))
+                                <flux:button wire:click="cancelInvitation({{ $invitation->id }})" variant="ghost" size="sm" icon="x-mark" />
+                            @endif
+                        </div>
+                    </flux:card>
+                @endforeach
+            </div>
+        </div>
+
+        <flux:separator />
+    @endif
+
+    <div>
+        <flux:heading size="md">Team Members</flux:heading>
+        <flux:text class="mb-6">All team members that currently have access to this team.</flux:text>
+
+        <div class="flex flex-col gap-3">
+            @foreach ($team->users as $member)
+                <flux:card class="flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        @if ($member->profile_photo_path)
+                            <flux:avatar circle size="md" src="{{ $member->profile_photo_url }}" />
+                        @else
+                            <flux:profile circle avatar:name="{{ $member->name }}" :chevron="false" />
+                        @endif
+
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <flux:heading size="sm">{{ $member->name }}</flux:heading>
+                                    @if ($member->id === $team->owner->id)
+                                        <flux:badge size="sm" color="zinc">Owner</flux:badge>
+                                    @elseif (\Laravel\Jetstream\Jetstream::hasRoles())
+                                        <flux:badge size="sm" color="zinc">{{ \Laravel\Jetstream\Jetstream::findRole($member->membership->role)?->name }}</flux:badge>
+                                    @endif
+                                </div>
+                                <flux:text class="text-sm">{{ $member->email }}</flux:text>
+                            </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        @if ($member->id !== $team->owner->id && \Laravel\Jetstream\Jetstream::hasRoles() && Gate::check('updateTeamMember', $team))
+                            <livewire:member :team="$team" :member="$member" key="member-{{ $member->id }}" />
+                        @endif
+
+                        @if ($member->id !== $team->owner->id && Gate::check('removeTeamMember', $team))
+                            <flux:button wire:click="removeMember({{ $member->id }})" variant="ghost" size="sm" icon="trash" tooltip="Remove member" />
+                        @endif
+                    </div>
+                </flux:card>
+            @endforeach
+        </div>
+    </div>
+
+    @if ($team->owner->id !== $this->user->id && !$team->personal_team)
+        <flux:separator />
+
+        <div>
+            <flux:heading size="md">Leave Team</flux:heading>
+            <flux:text class="mb-6">Are you sure you want to leave this team?</flux:text>
+
+            <flux:modal.trigger name="leave-team">
+                <flux:button variant="danger">Leave team</flux:button>
+            </flux:modal.trigger>
+
+            <flux:modal name="leave-team" class="min-w-[22rem]">
+                <div class="space-y-6">
+                    <div>
+                        <flux:heading size="lg">Leave team?</flux:heading>
+                        <flux:text class="mt-2">
+                            <p>You're about to leave this team.</p>
+                            <p>You'll lose access to all team resources.</p>
+                        </flux:text>
+                    </div>
+                    <div class="flex gap-2">
+                        <flux:spacer />
+                        <flux:modal.close>
+                            <flux:button variant="ghost">Cancel</flux:button>
+                        </flux:modal.close>
+                        <flux:button wire:click="leave" variant="danger">Leave team</flux:button>
+                    </div>
+                </div>
+            </flux:modal>
+        </div>
+    @endif
+</section>

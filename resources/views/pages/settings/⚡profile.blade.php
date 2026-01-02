@@ -65,8 +65,6 @@ new #[Title('Profile')] class extends Component
 ?>
 
 <section class="mx-auto max-w-6xl space-y-10">
-    <flux:heading size="lg">Profile</flux:heading>
-
     <form wire:submit="updateProfileInformation" class="w-full max-w-lg space-y-6">
         <flux:input wire:model="name" :label="'Name'" type="text" required autofocus autocomplete="name" />
 
