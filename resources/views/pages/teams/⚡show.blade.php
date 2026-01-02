@@ -36,6 +36,16 @@ new class extends Component
 };
 ?>
 
-<div>
-    {{-- Order your soul. Reduce your wants. - Augustine --}}
-</div>
+<section class="w-full">
+    <form wire:submit="updateTeamName" class="w-full max-w-lg space-y-6">
+        <flux:input wire:model="name" :label="'Team Name'" type="text" required autofocus />
+
+        <div class="flex items-center gap-4">
+            <div class="flex items-center justify-end">
+                <flux:button variant="primary" type="submit" class="w-full">Save</flux:button>
+            </div>
+
+            <x-action-message class="me-3" on="saved">Saved.</x-action-message>
+        </div>
+    </form>
+</section>
