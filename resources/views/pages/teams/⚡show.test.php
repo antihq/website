@@ -2,12 +2,12 @@
 
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
+use Laravel\Jetstream\Features;
+use Laravel\Jetstream\Mail\TeamInvitation;
 use Livewire\Livewire;
 
 use function Pest\Laravel\actingAs;
-
-uses(RefreshDatabase::class);
 
 it('can update team names', function () {
     actingAs($user = User::factory()->withPersonalTeam()->create());
@@ -69,4 +69,48 @@ test('delete modal is not shown for personal teams', function () {
     Livewire::test('pages::teams.show', ['team' => $user->currentTeam])
         ->assertDontSee('Delete Team')
         ->assertDontSee('Delete team?');
+});
+
+test('team members can be invited to team', function () {
+    if (! Features::sendsTeamInvitations()) {
+        $this->markTestSkipped('Team invitations not enabled.');
+    }
+
+    Mail::fake();
+
+    actingAs($user = User::factory()->withPersonalTeam()->create());
+
+    Livewire::test('pages::teams.show', ['team' => $user->currentTeam])
+        ->set([
+            'email' => 'test@example.com',
+            'role' => 'admin',
+        ])->call('addMember');
+
+    Mail::assertSent(TeamInvitation::class);
+
+    expect($user->currentTeam->fresh()->teamInvitations)->toHaveCount(1);
+});
+
+test('team member invitations can be cancelled', function () {
+    if (! Features::sendsTeamInvitations()) {
+        $this->markTestSkipped('Team invitations not enabled.');
+    }
+
+    Mail::fake();
+
+    actingAs($user = User::factory()->withPersonalTeam()->create());
+
+    // Add the team member...
+    $component = Livewire::test('pages::teams.show', ['team' => $user->currentTeam])
+        ->set([
+            'email' => 'test@example.com',
+            'role' => 'admin',
+        ])->call('addMember');
+
+    $invitationId = $user->currentTeam->fresh()->teamInvitations->first()->id;
+
+    // Cancel the team invitation...
+    $component->call('cancelInvitation', $invitationId);
+
+    expect($user->currentTeam->fresh()->teamInvitations)->toHaveCount(0);
 });
