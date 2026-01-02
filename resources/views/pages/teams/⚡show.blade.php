@@ -59,7 +59,7 @@ new class extends Component
 
 <section class="w-full">
     <form wire:submit="update" class="w-full max-w-lg space-y-6">
-        <flux:input wire:model="name" label="Team Name" type="text" required autofocus />
+        <flux:input wire:model="name" label="Team name" type="text" required autofocus />
 
         <div class="flex items-center gap-4">
             <div class="flex items-center justify-end">
@@ -73,7 +73,7 @@ new class extends Component
     @if (Gate::check('delete', $team) && ! $team->personal_team)
         <div>
             <flux:modal.trigger name="delete">
-                <flux:button variant="danger">Delete Team</flux:button>
+                <flux:button variant="danger">Delete team</flux:button>
             </flux:modal.trigger>
 
             <flux:modal name="delete" class="min-w-[22rem]">

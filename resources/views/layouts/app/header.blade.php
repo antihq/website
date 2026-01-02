@@ -67,6 +67,14 @@
                         >
                             Settings
                         </flux:menu.item>
+                        <flux:menu.item
+                            :href="route('teams.create')"
+                            icon="plus"
+                            icon:variant="micro"
+                            wire:navigate
+                        >
+                            Create new team
+                        </flux:menu.item>
                     </flux:menu.group>
 
                     <form method="POST" action="{{ route('logout') }}" class="w-full">

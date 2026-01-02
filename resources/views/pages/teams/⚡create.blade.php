@@ -37,8 +37,8 @@ new class extends Component
 ?>
 
 <section class="w-full">
-    <form wire:submit="update" class="w-full max-w-lg space-y-6">
-        <flux:input wire:model="name" label="Team Name" type="text" required autofocus />
+    <form wire:submit="create" class="w-full max-w-lg space-y-6">
+        <flux:input wire:model="name" label="Team name" type="text" required autofocus />
 
         <div class="flex items-center gap-4">
             <div class="flex items-center justify-end">
