@@ -18,6 +18,7 @@ Route::middleware([
 Route::middleware(['auth'])->group(function () {
     Route::livewire('teams/create', 'pages::teams.create')->name('teams.create');
     Route::livewire('teams/{team}', 'pages::teams.show')->name('teams.edit');
+    Route::livewire('teams/{team}/members', 'pages::teams.members.index')->name('teams.members.index');
 
     Route::redirect('settings', 'settings/profile');
 

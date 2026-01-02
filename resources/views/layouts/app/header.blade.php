@@ -68,6 +68,14 @@
                             Settings
                         </flux:menu.item>
                         <flux:menu.item
+                            :href="route('teams.members.index', auth()->user()->currentTeam)"
+                            icon="users"
+                            icon:variant="micro"
+                            wire:navigate
+                        >
+                            Members
+                        </flux:menu.item>
+                        <flux:menu.item
                             :href="route('teams.create')"
                             icon="plus"
                             icon:variant="micro"
