@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Livewire;
 
 it('renders successfully', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->withPersonalTeam()->create();
 
     Auth::login($user);
 
@@ -14,7 +14,7 @@ it('renders successfully', function () {
 });
 
 it('profile page is displayed', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->withPersonalTeam()->create();
 
     $this->actingAs($user);
 

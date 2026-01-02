@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Livewire\Livewire;
 
 it('renders successfully', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->withPersonalTeam()->create();
 
     Auth::login($user);
 
