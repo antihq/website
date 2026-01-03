@@ -60,15 +60,17 @@ new class extends Component
 
 <section class="mx-auto max-w-6xl">
     <form wire:submit="update" class="w-full max-w-lg space-y-6">
-        <flux:input wire:model="name" label="Team name" type="text" required autofocus />
+        <flux:input wire:model="name" label="Team name" type="text" :readonly="! Gate::check('update', $team)" :variant="! Gate::check('update', $team) ? 'filled' : null" required autofocus />
 
-        <div class="flex items-center gap-4">
-            <div class="flex items-center justify-end">
-                <flux:button variant="primary" type="submit" class="w-full">Save</flux:button>
+        @if (Gate::check('update', $team))
+            <div class="flex items-center gap-4">
+                <div class="flex items-center justify-end">
+                    <flux:button variant="primary" type="submit" class="w-full">Save</flux:button>
+                </div>
+
+                <x-action-message class="me-3" on="saved">Saved.</x-action-message>
             </div>
-
-            <x-action-message class="me-3" on="saved">Saved.</x-action-message>
-        </div>
+        @endif
     </form>
 
     @if (Gate::check('delete', $team) && ! $team->personal_team)
