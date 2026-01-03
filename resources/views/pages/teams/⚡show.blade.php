@@ -97,10 +97,7 @@ new class extends Component
                     <div class="space-y-6">
                         <div>
                             <flux:heading size="lg">Delete team?</flux:heading>
-                            <flux:text class="mt-2">
-                                <p>You're about to delete this team.</p>
-                                <p>This action cannot be reversed.</p>
-                            </flux:text>
+                            <flux:text class="mt-2">You're about to delete this team. This action cannot be reversed.</flux:text>
                         </div>
                         <div class="flex gap-2">
                             <flux:spacer />
