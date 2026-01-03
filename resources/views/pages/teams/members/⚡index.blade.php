@@ -14,6 +14,7 @@ use Laravel\Jetstream\Events\TeamMemberRemoved;
 use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Jetstream;
 use Laravel\Jetstream\Mail\TeamInvitation;
+use Laravel\Jetstream\Role as JetstreamRole;
 use Laravel\Jetstream\Rules\Role;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -89,6 +90,21 @@ new class extends Component
     public function user()
     {
         return Auth::user();
+    }
+
+    #[Computed]
+    public function roles()
+    {
+        return collect(Jetstream::$roles)
+            ->transform(function ($role) {
+                return with($role->jsonSerialize(), function ($data) {
+                    return (new JetstreamRole($data['key'], $data['name'], $data['permissions']))->description(
+                        $data['description'],
+                    );
+                });
+            })
+            ->values()
+            ->all();
     }
 
     protected function validateMember(): void
@@ -189,30 +205,29 @@ new class extends Component
                     </flux:text>
                 </header>
 
-                <form wire:submit="addMember" class="w-full max-w-sm space-y-8">
-                    <flux:field>
-                        <flux:label>Email</flux:label>
-                        <flux:input
-                            wire:model="email"
-                            type="email"
-                            required
-                            autofocus
-                            placeholder="john@example.com"
-                            size="sm"
-                        />
-                        <flux:error name="email" />
-                    </flux:field>
+                <form wire:submit="addMember" class="w-full max-w-lg space-y-8">
+                    <flux:input
+                        wire:model="email"
+                        type="email"
+                        label="Email"
+                        placeholder="john@example.com"
+                        size="sm"
+                        class="max-w-sm"
+                        required
+                        autofocus
+                    />
 
-                    @if (\Laravel\Jetstream\Jetstream::hasRoles())
-                        <flux:field>
-                            <flux:label>Role</flux:label>
-                            <flux:select wire:model="role" placeholder="Select a role" size="sm">
-                                @foreach (\Laravel\Jetstream\Jetstream::$roles as $key => $role)
-                                    <flux:select.option value="{{ $key }}">{{ $role->name }}</flux:select.option>
-                                @endforeach
-                            </flux:select>
-                            <flux:error name="role" />
-                        </flux:field>
+                    @if (count($this->roles) > 0)
+                        <flux:radio.group wire:model="role" label="Role">
+                            @foreach ($this->roles as $role)
+                                <flux:radio
+                                    name="role"
+                                    :value="$role->key"
+                                    :label="$role->name"
+                                    :description="$role->description"
+                                />
+                            @endforeach
+                        </flux:radio.group>
                     @endif
 
                     <div class="flex items-center gap-4">
