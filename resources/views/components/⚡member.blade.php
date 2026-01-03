@@ -22,7 +22,7 @@ new class extends Component
         $this->role = $this->member->teamRole($this->team)->key;
     }
 
-    public function update()
+    public function updatedRole()
     {
         $this->authorize('updateTeamMember', $this->team);
 
@@ -30,20 +30,11 @@ new class extends Component
             'role' => ['required', 'string', new Role],
         ]);
 
-        $this->updateRole($this->role);
-    }
-
-    public function updateRole(string $role)
-    {
-        $this->authorize('updateTeamMember', $this->team);
-
-        $this->role = $role;
-
         $this->team->users()->updateExistingPivot($this->member->id, [
-            'role' => $role,
+            'role' => $this->role,
         ]);
 
-        TeamMemberUpdated::dispatch($this->team->fresh(), $this->member);
+        TeamMemberUpdated::dispatch($this->team, $this->member);
     }
 
     #[Computed]
@@ -91,27 +82,22 @@ new class extends Component
                     variant="subtle"
                     class="text-[13px]"
                 >
-                    {{ Laravel\Jetstream\Jetstream::findRole($member->membership->role)->name }}
+                    {{ Laravel\Jetstream\Jetstream::findRole($role)->name }}
                 </flux:button>
 
                 <flux:menu>
                     <flux:menu.heading>Change role</flux:menu.heading>
-                    @foreach ($this->roles as $role)
-                        @if ($member->teamRole($team)->key === $role->key)
-                            <flux:menu.item wire:click="updateRole('{{ $role->key }}')" icon="check">
-                                {{ $role->name }}
-                            </flux:menu.item>
-                        @else
-                            <flux:menu.item wire:click="updateRole('{{ $role->key }}')">
-                                {{ $role->name }}
-                            </flux:menu.item>
-                        @endif
-                    @endforeach
+
+                    <flux:menu.radio.group wire:model.live="role">
+                        @foreach ($this->roles as $role)
+                            <flux:menu.radio :value="$role->key">{{ $role->name }}</flux:menu.radio>
+                        @endforeach
+                    </flux:menu.radio.group>
                 </flux:menu>
             </flux:dropdown>
         @elseif ( Laravel\Jetstream\Jetstream::hasRoles())
             <flux:text class="text-[13px]">
-                {{ Laravel\Jetstream\Jetstream::findRole($member->membership->role)->name }}
+                {{ Laravel\Jetstream\Jetstream::findRole($role)->name }}
             </flux:text>
         @endif
     </div>

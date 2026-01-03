@@ -13,8 +13,7 @@ test('team member roles can be updated', function () {
     );
 
     Livewire::test('member', ['team' => $user->currentTeam, 'member' => $otherUser])
-        ->set('role', 'editor')
-        ->call('update');
+        ->set('role', 'editor');
 
     expect($otherUser->fresh()->hasTeamRole(
         $user->currentTeam->fresh(), 'editor'
@@ -32,7 +31,6 @@ test('only team owner can update team member roles', function () {
 
     Livewire::test('member', ['team' => $user->currentTeam, 'member' => $otherUser])
         ->set('role', 'editor')
-        ->call('update')
         ->assertStatus(403);
 
     expect($otherUser->fresh()->hasTeamRole(
