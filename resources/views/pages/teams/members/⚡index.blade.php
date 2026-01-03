@@ -244,11 +244,11 @@ new class extends Component
                                 @if (Gate::check('removeTeamMember', $team))
                                     <flux:button
                                         wire:click="cancelInvitation({{ $invitation->id }})"
-                                        variant="subtle"
-                                        size="sm"
-                                        icon="x-mark"
+                                        size="xs"
                                         inset="top bottom"
-                                    />
+                                    >
+                                        Cancel
+                                    </flux:button>
                                 @endif
                             </div>
                         </div>
