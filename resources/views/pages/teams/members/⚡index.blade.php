@@ -257,53 +257,15 @@ new class extends Component
             </div>
         @endif
 
-        <div class="space-y-8">
+        <div class="space-y-6">
             <header class="space-y-1">
                 <flux:heading>Team members</flux:heading>
                 <flux:text>All team members that currently have access to this team.</flux:text>
             </header>
 
-            <div class="flex flex-col gap-3">
+            <div class="max-w-3xl divide-y divide-zinc-100 text-zinc-950 dark:divide-white/5 dark:text-white">
                 @foreach ($team->users as $member)
-                    <flux:card class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            @if ($member->profile_photo_path)
-                                <flux:avatar circle src="{{ $member->profile_photo_url }}" />
-                            @else
-                                <flux:profile circle avatar:name="{{ $member->name }}" :chevron="false" />
-                            @endif
-
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <flux:heading size="sm">{{ $member->name }}</flux:heading>
-                                    @if ($member->id === $team->owner->id)
-                                        <flux:badge size="sm" color="zinc">Owner</flux:badge>
-                                    @elseif (\Laravel\Jetstream\Jetstream::hasRoles())
-                                        <flux:badge size="sm" color="zinc">
-                                            {{ \Laravel\Jetstream\Jetstream::findRole($member->membership->role)?->name }}
-                                        </flux:badge>
-                                    @endif
-                                </div>
-                                <flux:text class="text-sm">{{ $member->email }}</flux:text>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-2">
-                            @if ($member->id !== $team->owner->id && \Laravel\Jetstream\Jetstream::hasRoles() && Gate::check('updateTeamMember', $team))
-                                <livewire:member :team="$team" :member="$member" key="member-{{ $member->id }}" />
-                            @endif
-
-                            @if ($member->id !== $team->owner->id && Gate::check('removeTeamMember', $team))
-                                <flux:button
-                                    wire:click="removeMember({{ $member->id }})"
-                                    variant="ghost"
-                                    size="sm"
-                                    icon="trash"
-                                    tooltip="Remove member"
-                                />
-                            @endif
-                        </div>
-                    </flux:card>
+                    <livewire:member :team="$team" :member="$member" key="member-{{ $member->id }}" />
                 @endforeach
             </div>
         </div>
