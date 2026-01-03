@@ -26,11 +26,11 @@ new class extends Component
 };
 ?>
 
-<flux:header class="px-6!">
+<flux:header {{ $attributes }}>
     <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" size="sm" />
 
     <flux:navbar class="-mb-px max-lg:hidden">
-        <flux:navbar.item :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+        <flux:navbar.item :href="route('dashboard')" :current="request()->routeIs('dashboard')" :accent="false" wire:navigate>
             Dashboard
         </flux:navbar.item>
     </flux:navbar>

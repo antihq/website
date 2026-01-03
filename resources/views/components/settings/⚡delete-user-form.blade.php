@@ -55,6 +55,7 @@ new class extends Component
             variant="danger"
             x-data=""
             x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
+            size="sm"
         >
             Delete account
         </flux:button>
@@ -78,7 +79,7 @@ new class extends Component
                     <flux:button variant="filled">Cancel</flux:button>
                 </flux:modal.close>
 
-                <flux:button variant="danger" type="submit">Delete account</flux:button>
+                <flux:button variant="danger" type="submit" size="sm">Delete account</flux:button>
             </div>
         </form>
     </flux:modal>

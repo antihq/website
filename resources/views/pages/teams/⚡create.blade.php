@@ -36,14 +36,25 @@ new class extends Component
 };
 ?>
 
-<section class="mx-auto max-w-6xl">
-    <form wire:submit="create" class="w-full max-w-lg space-y-6">
-        <flux:input wire:model="name" label="Team name" type="text" required autofocus />
+<section class="mx-auto max-w-6xl space-y-8">
+    <flux:heading size="lg">Create team</flux:heading>
 
-        <div class="flex items-center gap-4">
-            <div class="flex items-center justify-end">
-                <flux:button variant="primary" type="submit" class="w-full">Create</flux:button>
-            </div>
+    <div class="space-y-14">
+        <div class="space-y-8">
+            <header>
+                <flux:heading>Team details</flux:heading>
+                <flux:text class="mt-1">Create a new team to collaborate with others on projects.</flux:text>
+            </header>
+
+            <form wire:submit="create" class="w-full max-w-lg space-y-8">
+                <flux:input wire:model="name" label="Team name" type="text" size="sm" required autofocus />
+
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center justify-end">
+                        <flux:button variant="primary" type="submit" class="w-full" size="sm">Create</flux:button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </section>

@@ -153,38 +153,49 @@ new #[Title('Two Factor Authentication')] class extends Component
 };
 ?>
 
-<section class="mx-auto max-w-6xl">
-    <div class="flex w-full flex-col space-y-6 text-sm max-w-lg" wire:cloak>
-        @if ($twoFactorEnabled)
-            <div class="space-y-4">
-                <div class="flex items-center gap-3">
-                    <flux:badge color="green">Enabled</flux:badge>
-                </div>
-                <flux:text>
-                    With two-factor authentication enabled, you will be prompted for a secure, random pin during login,
-                    which you can retrieve from the TOTP-supported application on your phone.
-                </flux:text>
-                <livewire:settings.two-factor.recovery-codes :$requiresConfirmation />
-                <div class="flex justify-start">
-                    <flux:button variant="danger" icon="shield-exclamation" icon:variant="outline" wire:click="disable">
-                        Disable 2FA
-                    </flux:button>
-                </div>
+<section class="mx-auto max-w-6xl space-y-8">
+    <flux:heading size="lg">Two Factor Authentication</flux:heading>
+
+    <div class="space-y-14">
+        <div class="space-y-8">
+            <header>
+                <flux:heading>Authentication status</flux:heading>
+                <flux:text class="mt-1">Add an extra layer of security to your account using two-factor authentication.</flux:text>
+            </header>
+
+            <div class="flex w-full flex-col space-y-6 text-sm max-w-lg" wire:cloak>
+                @if ($twoFactorEnabled)
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <flux:badge color="green">Enabled</flux:badge>
+                        </div>
+                        <flux:text>
+                            With two-factor authentication enabled, you will be prompted for a secure, random pin during login,
+                            which you can retrieve from the TOTP-supported application on your phone.
+                        </flux:text>
+                        <livewire:settings.two-factor.recovery-codes :$requiresConfirmation />
+                        <div class="flex justify-start">
+                            <flux:button variant="danger" icon="shield-exclamation" icon:variant="outline" size="sm" wire:click="disable">
+                                Disable 2FA
+                            </flux:button>
+                        </div>
+                    </div>
+                @else
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <flux:badge color="red">Disabled</flux:badge>
+                        </div>
+                        <flux:text variant="subtle">
+                            When you enable two-factor authentication, you will be prompted for a secure pin during login. This
+                            pin can be retrieved from a TOTP-supported application on your phone.
+                        </flux:text>
+                        <flux:button variant="primary" icon="shield-check" icon:variant="outline" size="sm" wire:click="enable">
+                            Enable 2FA
+                        </flux:button>
+                    </div>
+                @endif
             </div>
-        @else
-            <div class="space-y-4">
-                <div class="flex items-center gap-3">
-                    <flux:badge color="red">Disabled</flux:badge>
-                </div>
-                <flux:text variant="subtle">
-                    When you enable two-factor authentication, you will be prompted for a secure pin during login. This
-                    pin can be retrieved from a TOTP-supported application on your phone.
-                </flux:text>
-                <flux:button variant="primary" icon="shield-check" icon:variant="outline" wire:click="enable">
-                    Enable 2FA
-                </flux:button>
-            </div>
-        @endif
+        </div>
     </div>
 
     <flux:modal name="two-factor-setup-modal" class="max-w-md md:min-w-md" @close="closeModal" wire:model="showModal">
