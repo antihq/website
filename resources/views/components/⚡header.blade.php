@@ -1,10 +1,28 @@
 <?php
 
+use App\Models\Team;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 new class extends Component
 {
-    //
+    public ?int $team = null;
+
+    public function mount(): void
+    {
+        $this->team = Auth::user()?->current_team_id;
+    }
+
+    public function updatedTeam()
+    {
+        $team = Team::findOrFail($this->team);
+
+        if (! Auth::user()->switchTeam($team)) {
+            abort(403);
+        }
+
+        return $this->redirectRoute('dashboard', navigate: true);
+    }
 };
 ?>
 
@@ -88,9 +106,9 @@ new class extends Component
 
             @if (Auth::user()->allTeams()->count() > 1)
                 <flux:menu.group heading="Switch teams">
-                    <flux:menu.radio.group wire:model="team">
+                    <flux:menu.radio.group wire:model.live="team">
                         @foreach (Auth::user()->allTeams() as $team)
-                            <flux:menu.radio>{{ $team->name }}</flux:menu.radio>
+                            <flux:menu.radio :value="$team->id">{{ $team->name }}</flux:menu.radio>
                         @endforeach
                     </flux:menu.radio.group>
                 </flux:menu.group>
