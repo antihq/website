@@ -27,6 +27,11 @@ new class extends Component
 
     public $role = '';
 
+    public function mount()
+    {
+        $this->authorize('view', $this->team);
+    }
+
     public function addMember()
     {
         $this->resetErrorBag();
@@ -241,7 +246,7 @@ new class extends Component
             </div>
         @endif
 
-        @if (Features::sendsTeamInvitations() && $team->teamInvitations->isNotEmpty())
+        @if ($team->teamInvitations->isNotEmpty() && Gate::check('addTeamMember', $team))
             <div class="space-y-6">
                 <header class="space-y-1">
                     <flux:heading>Pending invitations</flux:heading>
@@ -281,25 +286,27 @@ new class extends Component
             </div>
         @endif
 
-        <div class="space-y-6">
-            <header class="space-y-1">
-                <flux:heading>Team members</flux:heading>
-                <flux:text>All team members that currently have access to this team.</flux:text>
-            </header>
+        @if ($team->users->isNotEmpty())
+            <div class="space-y-6">
+                <header class="space-y-1">
+                    <flux:heading>Team members</flux:heading>
+                    <flux:text>All team members that currently have access to this team.</flux:text>
+                </header>
 
-            <div class="max-w-3xl divide-y divide-zinc-100 text-zinc-950 dark:divide-white/5 dark:text-white">
-                @foreach ($team->users as $member)
-                    <livewire:member :$team :$member key="member-{{ $member->id }}" />
-                @endforeach
+                <div class="max-w-3xl divide-y divide-zinc-100 text-zinc-950 dark:divide-white/5 dark:text-white">
+                    @foreach ($team->users->sortBy('name') as $member)
+                        <livewire:member :$team :$member key="member-{{ $member->id }}" />
+                    @endforeach
+                </div>
             </div>
-        </div>
+        @endif
 
         @if ($team->owner->id !== $this->user->id)
-            <flux:separator />
-
-            <div>
-                <flux:heading>Leave team</flux:heading>
-                <flux:text class="mb-6">Are you sure you want to leave this team?</flux:text>
+            <div class="space-y-6">
+                <header class="space-y-1">
+                    <flux:heading>Leave team</flux:heading>
+                    <flux:text class="mb-6">Are you sure you want to leave this team?</flux:text>
+                </header>
 
                 <flux:modal.trigger name="leave-team">
                     <flux:button variant="danger">Leave team</flux:button>
@@ -307,12 +314,9 @@ new class extends Component
 
                 <flux:modal name="leave-team" class="min-w-[22rem]">
                     <div class="space-y-6">
-                        <div>
+                        <div class="space-y-2">
                             <flux:heading size="lg">Leave team?</flux:heading>
-                            <flux:text class="mt-2">
-                                <p>You're about to leave this team.</p>
-                                <p>You'll lose access to all team resources.</p>
-                            </flux:text>
+                            <flux:text>You're about to leave this team. You'll lose access to all team resources.</flux:text>
                         </div>
                         <div class="flex gap-2">
                             <flux:spacer />

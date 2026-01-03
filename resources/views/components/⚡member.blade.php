@@ -3,7 +3,10 @@
 use App\Models\Team;
 use Illuminate\Foundation\Auth\User;
 use Laravel\Jetstream\Events\TeamMemberUpdated;
+use Laravel\Jetstream\Jetstream;
+use Laravel\Jetstream\Role as JetstreamRole;
 use Laravel\Jetstream\Rules\Role;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 new class extends Component
@@ -42,6 +45,21 @@ new class extends Component
 
         TeamMemberUpdated::dispatch($this->team->fresh(), $this->member);
     }
+
+    #[Computed]
+    public function roles()
+    {
+        return collect(Jetstream::$roles)
+            ->transform(function ($role) {
+                return with($role->jsonSerialize(), function ($data) {
+                    return (new JetstreamRole($data['key'], $data['name'], $data['permissions']))->description(
+                        $data['description'],
+                    );
+                });
+            })
+            ->values()
+            ->all();
+    }
 };
 ?>
 
@@ -64,44 +82,42 @@ new class extends Component
     <div class="flex min-w-fit justify-end">
         @if ($member->id === $team->owner->id)
             <flux:text class="text-[13px]">Owner</flux:text>
-        @elseif (\Laravel\Jetstream\Jetstream::hasRoles())
-            @if ($member->id !== $team->owner->id && \Laravel\Jetstream\Jetstream::hasRoles() && Gate::check('updateTeamMember', $team))
-                <flux:dropdown align="end">
-                    <flux:button
-                        size="sm"
-                        inset="top bottom"
-                        icon:trailing="chevron-down"
-                        variant="subtle"
-                        class="text-[13px]"
-                    >
-                        {{ \Laravel\Jetstream\Jetstream::findRole($member->membership->role)?->name }}
-                    </flux:button>
+        @elseif (Gate::check('updateTeamMember', $team) && Laravel\Jetstream\Jetstream::hasRoles())
+            <flux:dropdown align="end">
+                <flux:button
+                    size="sm"
+                    inset="top bottom"
+                    icon:trailing="chevron-down"
+                    variant="subtle"
+                    class="text-[13px]"
+                >
+                    {{ Laravel\Jetstream\Jetstream::findRole($member->membership->role)->name }}
+                </flux:button>
 
-                    <flux:menu>
-                        <flux:menu.heading>Change role</flux:menu.heading>
-                        @foreach (\Laravel\Jetstream\Jetstream::$roles as $key => $role)
-                            @if ($member->teamRole($team)->key === $key)
-                                <flux:menu.item wire:click="updateRole('{{ $key }}')" icon="check">
-                                    {{ $role->name }}
-                                </flux:menu.item>
-                            @else
-                                <flux:menu.item wire:click="updateRole('{{ $key }}')">
-                                    {{ $role->name }}
-                                </flux:menu.item>
-                            @endif
-                        @endforeach
-                    </flux:menu>
-                </flux:dropdown>
-            @else
-                <flux:text class="text-[13px]">
-                    {{ \Laravel\Jetstream\Jetstream::findRole($member->membership->role)?->name }}
-                </flux:text>
-            @endif
+                <flux:menu>
+                    <flux:menu.heading>Change role</flux:menu.heading>
+                    @foreach ($this->roles as $role)
+                        @if ($member->teamRole($team)->key === $role->key)
+                            <flux:menu.item wire:click="updateRole('{{ $role->key }}')" icon="check">
+                                {{ $role->name }}
+                            </flux:menu.item>
+                        @else
+                            <flux:menu.item wire:click="updateRole('{{ $role->key }}')">
+                                {{ $role->name }}
+                            </flux:menu.item>
+                        @endif
+                    @endforeach
+                </flux:menu>
+            </flux:dropdown>
+        @elseif ( Laravel\Jetstream\Jetstream::hasRoles())
+            <flux:text class="text-[13px]">
+                {{ Laravel\Jetstream\Jetstream::findRole($member->membership->role)->name }}
+            </flux:text>
         @endif
     </div>
 
     <div class="flex min-w-fit justify-end">
-        @if ($member->id !== $team->owner->id && Gate::check('removeTeamMember', $team))
+        @if (Gate::check('removeTeamMember', $team))
             <flux:button wire:click="$parent.removeMember({{ $member->id }})" size="xs" inset="top bottom">
                 Remove
             </flux:button>

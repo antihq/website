@@ -13,6 +13,8 @@ new class extends Component
 
     public function mount()
     {
+        $this->authorize('view', $this->team);
+
         $this->name = $this->team->name;
     }
 
