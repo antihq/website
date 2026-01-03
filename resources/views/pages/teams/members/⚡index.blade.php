@@ -309,7 +309,7 @@ new class extends Component
                 </header>
 
                 <flux:modal.trigger name="leave-team">
-                    <flux:button variant="danger">Leave team</flux:button>
+                    <flux:button variant="danger" size="sm">Leave team</flux:button>
                 </flux:modal.trigger>
 
                 <flux:modal name="leave-team" class="min-w-[22rem]">
@@ -321,9 +321,9 @@ new class extends Component
                         <div class="flex gap-2">
                             <flux:spacer />
                             <flux:modal.close>
-                                <flux:button variant="ghost">Cancel</flux:button>
+                                <flux:button variant="ghost" size="sm">Cancel</flux:button>
                             </flux:modal.close>
-                            <flux:button wire:click="leave" variant="danger">Leave team</flux:button>
+                            <flux:button wire:click="leave" variant="danger" size="sm">Leave team</flux:button>
                         </div>
                     </div>
                 </flux:modal>
