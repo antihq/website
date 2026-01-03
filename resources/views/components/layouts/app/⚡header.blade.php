@@ -1,0 +1,113 @@
+<?php
+
+use Livewire\Component;
+
+new class extends Component
+{
+    //
+};
+?>
+
+<flux:header class="px-6!">
+    <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" size="sm" />
+
+    <flux:navbar class="-mb-px max-lg:hidden">
+        <flux:navbar.item :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+            Dashboard
+        </flux:navbar.item>
+    </flux:navbar>
+
+    <flux:spacer />
+
+    <!-- Desktop User Menu -->
+    <flux:dropdown position="top" align="end">
+        <flux:profile
+            class="cursor-pointer"
+            :initials="auth()->user()->initials()"
+            avatar:size="xs"
+            :chevron="false"
+        />
+
+        <flux:menu>
+            <flux:menu.group heading="Account">
+                <flux:menu.item :href="route('profile.edit')" icon="user" icon:variant="micro" wire:navigate>
+                    Profile
+                </flux:menu.item>
+                <flux:menu.item
+                    :href="route('user-password.edit')"
+                    icon="key"
+                    icon:variant="micro"
+                    wire:navigate
+                >
+                    Password
+                </flux:menu.item>
+                <flux:menu.item
+                    :href="route('two-factor.show')"
+                    icon="shield-check"
+                    icon:variant="micro"
+                    wire:navigate
+                >
+                    Two-Factor Auth
+                </flux:menu.item>
+                <flux:menu.item
+                    :href="route('appearance.edit')"
+                    icon="adjustments-horizontal"
+                    icon:variant="micro"
+                    wire:navigate
+                >
+                    Appearance
+                </flux:menu.item>
+            </flux:menu.group>
+
+            <flux:menu.group heading="Team">
+                <flux:menu.item
+                    :href="route('teams.edit', auth()->user()->currentTeam)"
+                    icon="cog"
+                    icon:variant="micro"
+                    wire:navigate
+                >
+                    Settings
+                </flux:menu.item>
+                <flux:menu.item
+                    :href="route('teams.members.index', auth()->user()->currentTeam)"
+                    icon="users"
+                    icon:variant="micro"
+                    wire:navigate
+                >
+                    Members
+                </flux:menu.item>
+                <flux:menu.item
+                    :href="route('teams.create')"
+                    icon="plus"
+                    icon:variant="micro"
+                    wire:navigate
+                >
+                    Create new team
+                </flux:menu.item>
+            </flux:menu.group>
+
+            @if (Auth::user()->allTeams()->count() > 1)
+                <flux:menu.group heading="Switch teams">
+                    <flux:menu.radio.group wire:model="team">
+                        @foreach (Auth::user()->allTeams() as $team)
+                            <flux:menu.radio>{{ $team->name }}</flux:menu.radio>
+                        @endforeach
+                    </flux:menu.radio.group>
+                </flux:menu.group>
+            @endif
+
+            <form method="POST" action="{{ route('logout') }}" class="w-full">
+                @csrf
+                <flux:menu.item
+                    as="button"
+                    type="submit"
+                    icon="arrow-right-start-on-rectangle"
+                    icon:variant="micro"
+                    class="w-full"
+                >
+                    Log Out
+                </flux:menu.item>
+            </form>
+        </flux:menu>
+    </flux:dropdown>
+</flux:header>
