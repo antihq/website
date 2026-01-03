@@ -59,12 +59,12 @@ new class extends Component
         @if ($member->profile_photo_path)
             <flux:avatar circle size="xs" src="{{ $member->profile_photo_url }}" />
         @else
-            <flux:profile circle avatar:name="{{ $member->name }}" :chevron="false" size="xs" />
+            <flux:avatar circle avatar:name="{{ $member->name }}" size="xs" />
         @endif
         <flux:heading size="sm">{{ $member->name }}</flux:heading>
     </div>
 
-    <div class="flex min-w-fit justify-end">
+    <div class="flex min-w-fit justify-end max-lg:hidden">
         <flux:text class="text-[13px]">
             {{ $member->email }}
         </flux:text>
@@ -86,8 +86,6 @@ new class extends Component
                 </flux:button>
 
                 <flux:menu>
-                    <flux:menu.heading>Change role</flux:menu.heading>
-
                     <flux:menu.radio.group wire:model.live="role">
                         @foreach ($this->roles as $role)
                             <flux:menu.radio :value="$role->key">{{ $role->name }}</flux:menu.radio>
