@@ -197,6 +197,21 @@ new class extends Component
     <flux:heading size="lg">Team members</flux:heading>
 
     <div class="space-y-14">
+        @if ($team->users->isNotEmpty())
+            <div class="space-y-6">
+                <header class="space-y-1">
+                    <flux:heading>Team members</flux:heading>
+                    <flux:text>All team members that currently have access to this team.</flux:text>
+                </header>
+
+                <div class="max-w-3xl divide-y divide-zinc-100 text-zinc-950 dark:divide-white/5 dark:text-white">
+                    @foreach ($team->users->sortBy('name') as $member)
+                        <livewire:member :$team :$member key="member-{{ $member->id }}" />
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
         @if (Gate::check('addTeamMember', $team))
             <div class="space-y-8">
                 <header>
@@ -281,21 +296,6 @@ new class extends Component
                                 @endif
                             </div>
                         </div>
-                    @endforeach
-                </div>
-            </div>
-        @endif
-
-        @if ($team->users->isNotEmpty())
-            <div class="space-y-6">
-                <header class="space-y-1">
-                    <flux:heading>Team members</flux:heading>
-                    <flux:text>All team members that currently have access to this team.</flux:text>
-                </header>
-
-                <div class="max-w-3xl divide-y divide-zinc-100 text-zinc-950 dark:divide-white/5 dark:text-white">
-                    @foreach ($team->users->sortBy('name') as $member)
-                        <livewire:member :$team :$member key="member-{{ $member->id }}" />
                     @endforeach
                 </div>
             </div>
