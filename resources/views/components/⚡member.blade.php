@@ -73,7 +73,7 @@ new class extends Component
     <div class="flex min-w-fit justify-end">
         @if ($member->id === $team->owner->id)
             <flux:text class="text-[13px]">Owner</flux:text>
-        @elseif (Gate::check('updateTeamMember', $team) && Laravel\Jetstream\Jetstream::hasRoles())
+        @elseif (Gate::check('updateTeamMember', $team) && Jetstream::hasRoles())
             <flux:dropdown align="end">
                 <flux:button
                     size="sm"
@@ -82,7 +82,7 @@ new class extends Component
                     variant="subtle"
                     class="text-[13px]"
                 >
-                    {{ Laravel\Jetstream\Jetstream::findRole($role)->name }}
+                    {{ Jetstream::findRole($role)->name }}
                 </flux:button>
 
                 <flux:menu>
@@ -93,9 +93,9 @@ new class extends Component
                     </flux:menu.radio.group>
                 </flux:menu>
             </flux:dropdown>
-        @elseif ( Laravel\Jetstream\Jetstream::hasRoles())
+        @elseif ( Jetstream::hasRoles())
             <flux:text class="text-[13px]">
-                {{ Laravel\Jetstream\Jetstream::findRole($role)->name }}
+                {{ Jetstream::findRole($role)->name }}
             </flux:text>
         @endif
     </div>

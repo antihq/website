@@ -277,9 +277,9 @@ new class extends Component
                             </div>
 
                             <div class="flex min-w-fit justify-end">
-                                @if (\Laravel\Jetstream\Jetstream::hasRoles())
+                                @if (Jetstream::hasRoles())
                                     <flux:text class="text-[13px]">
-                                        {{ \Laravel\Jetstream\Jetstream::findRole($invitation->role)?->name }}
+                                        {{ Jetstream::findRole($invitation->role)?->name }}
                                     </flux:text>
                                 @endif
                             </div>
