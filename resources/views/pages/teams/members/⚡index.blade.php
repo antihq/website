@@ -192,14 +192,21 @@ new class extends Component
                 <form wire:submit="addMember" class="w-full max-w-sm space-y-8">
                     <flux:field>
                         <flux:label>Email</flux:label>
-                        <flux:input wire:model="email" type="email" required autofocus placeholder="john@example.com" />
+                        <flux:input
+                            wire:model="email"
+                            type="email"
+                            required
+                            autofocus
+                            placeholder="john@example.com"
+                            size="sm"
+                        />
                         <flux:error name="email" />
                     </flux:field>
 
                     @if (\Laravel\Jetstream\Jetstream::hasRoles())
                         <flux:field>
                             <flux:label>Role</flux:label>
-                            <flux:select wire:model="role" placeholder="Select a role">
+                            <flux:select wire:model="role" placeholder="Select a role" size="sm">
                                 @foreach (\Laravel\Jetstream\Jetstream::$roles as $key => $role)
                                     <flux:select.option value="{{ $key }}">{{ $role->name }}</flux:select.option>
                                 @endforeach
@@ -210,7 +217,9 @@ new class extends Component
 
                     <div class="flex items-center gap-4">
                         <div class="flex items-center justify-end">
-                            <flux:button variant="primary" type="submit" class="w-full">Add Member</flux:button>
+                            <flux:button variant="primary" type="submit" class="w-full" size="sm">
+                                Add member
+                            </flux:button>
                         </div>
                     </div>
                 </form>
@@ -265,7 +274,7 @@ new class extends Component
 
             <div class="max-w-3xl divide-y divide-zinc-100 text-zinc-950 dark:divide-white/5 dark:text-white">
                 @foreach ($team->users as $member)
-                    <livewire:member :team="$team" :member="$member" key="member-{{ $member->id }}" />
+                    <livewire:member :$team :$member key="member-{{ $member->id }}" />
                 @endforeach
             </div>
         </div>
