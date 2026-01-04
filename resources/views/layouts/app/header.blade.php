@@ -11,24 +11,27 @@
 
         <!-- Mobile Menu -->
         <flux:sidebar
-            stashable
             sticky
-            class="border-e border-zinc-200 bg-white lg:hidden dark:border-zinc-700 dark:bg-zinc-900"
+            collapsible="mobile"
+            class="rounded-r-lg bg-white shadow-xs ring-1 ring-zinc-950/5 lg:hidden dark:bg-zinc-900 dark:ring-white/10"
         >
-            <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
+            <flux:sidebar.header>
+                <flux:spacer />
+                <flux:sidebar.collapse
+                    class="in-data-flux-sidebar-on-desktop:not-in-data-flux-sidebar-collapsed-desktop:-mr-2"
+                />
+            </flux:sidebar.header>
 
-            <flux:navlist variant="outline">
-                <flux:navlist.group>
-                    <flux:navlist.item
-                        icon="home"
-                        :href="route('dashboard')"
-                        :current="request()->routeIs('dashboard')"
-                        wire:navigate
-                    >
-                        Dashboard
-                    </flux:navlist.item>
-                </flux:navlist.group>
-            </flux:navlist>
+            <flux:sidebar.nav>
+                <flux:sidebar.item
+                    :href="route('dashboard')"
+                    :current="request()->routeIs('dashboard')"
+                    :accent="false"
+                    wire:navigate
+                >
+                    Dashboard
+                </flux:sidebar.item>
+            </flux:sidebar.nav>
         </flux:sidebar>
 
         {{ $slot }}
