@@ -99,35 +99,52 @@ new #[Title('Profile')] class extends Component
                 <flux:text class="mt-1">Update your account's profile information and email address.</flux:text>
             </header>
 
-            <div class="flex items-center gap-4">
-                @if (auth()->user()->profile_photo_path)
-                    <flux:avatar circle size="lg" src="{{ auth()->user()->profile_photo_url }}" />
-                @else
-                    <flux:avatar circle avatar:name="{{ auth()->user()->name }}" size="lg" />
-                @endif
+            <div class="flex items-start gap-6">
+                <flux:file-upload wire:model="photo">
+                    <!-- Custom avatar uploader -->
+                    <div
+                        class="relative flex size-20 cursor-pointer items-center justify-center rounded-full border border-zinc-200 bg-zinc-100 transition-colors hover:border-zinc-300 hover:bg-zinc-200 dark:border-white/10 dark:bg-white/10 dark:hover:border-white/10 hover:dark:bg-white/15 in-data-dragging:dark:bg-white/15"
+                    >
+                        <!-- Show uploaded file if it exists -->
 
-                <div class="flex-1">
-                    <flux:file-upload wire:model="photo" label="Profile photo">
-                        <flux:file-upload.dropzone
-                            heading="Drop file here or click to browse"
-                            text="JPG, PNG, GIF up to 10MB"
-                        />
-                    </flux:file-upload>
+                        @if ($photo && ! $errors->has('photo'))
+                            <img src="{{ $photo?->temporaryUrl() }}" class="size-full rounded-full object-cover" />
+                        @elseif (auth()->user()->profile_photo_path)
+                            <img
+                                src="{{ auth()->user()->profile_photo_url }}"
+                                class="size-full rounded-full object-cover"
+                            />
+                        @else
+                            <!-- Show default icon if no file is uploaded -->
+                            <flux:icon name="user" variant="solid" class="text-zinc-500 dark:text-zinc-400" />
+                        @endif
+
+                        <!-- Corner upload icon -->
+                        <div class="absolute right-0 bottom-0 rounded-full bg-white dark:bg-zinc-800">
+                            <flux:icon
+                                name="arrow-up-circle"
+                                variant="solid"
+                                class="text-zinc-500 dark:text-zinc-400"
+                            />
+                        </div>
+                    </div>
+                </flux:file-upload>
+
+                <div class="flex-1 space-y-3">
+                    <div>
+                        <flux:heading size="sm">Profile photo</flux:heading>
+                        <flux:text class="text-sm">JPG, PNG, or GIF up to 10MB</flux:text>
+                    </div>
 
                     @if ($photo && ! $errors->has('photo'))
-                        <div class="mt-3 flex flex-col gap-2">
-                            <flux:file-item
-                                :heading="$photo->getClientOriginalName()"
-                                :image="$photo->temporaryUrl()"
-                                :size="$photo->getSize()"
-                            />
+                        <div class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
+                            <flux:icon name="check-circle" variant="solid" size="xs" />
+                            <span>{{ $photo->getClientOriginalName() }}</span>
                         </div>
                     @endif
 
                     @if (auth()->user()->profile_photo_path)
-                        <flux:button wire:click="removePhoto" variant="subtle" size="xs" class="mt-2">
-                            Remove photo
-                        </flux:button>
+                        <flux:button wire:click="removePhoto" size="xs">Remove photo</flux:button>
                     @endif
                 </div>
             </div>
