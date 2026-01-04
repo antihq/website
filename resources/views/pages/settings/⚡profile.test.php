@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 
 it('renders successfully', function () {
@@ -83,4 +85,76 @@ it('correct password must be provided to delete account', function () {
     $response->assertHasErrors(['password']);
 
     expect($user->fresh())->not->toBeNull();
+});
+
+it('user can upload a profile photo', function () {
+    Storage::fake('public');
+
+    $user = User::factory()->create();
+
+    $this->actingAs($user);
+
+    $photo = UploadedFile::fake()->image('photo.jpg');
+
+    Livewire::test('pages::settings.profile')
+        ->set('photo', $photo)
+        ->assertHasNoErrors();
+
+    $user->refresh();
+
+    expect($user->profile_photo_path)->not->toBeNull();
+    expect($user->profile_photo_path)->toContain('profile-photos');
+});
+
+it('profile photo must be an image', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user);
+
+    $file = UploadedFile::fake()->create('document.txt', 100);
+
+    $livewire = Livewire::test('pages::settings.profile');
+
+    $livewire->assertHasNoErrors();
+
+    $livewire->set('photo', $file);
+
+    $livewire->assertHasErrors(['photo' => 'image']);
+});
+
+it('profile photo must not exceed 10MB', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user);
+
+    $photo = UploadedFile::fake()->image('photo.jpg')->size(10241);
+
+    Livewire::test('pages::settings.profile')
+        ->set('photo', $photo)
+        ->assertHasErrors(['photo' => 'max']);
+});
+
+it('user can remove their profile photo', function () {
+    Storage::fake('public');
+
+    $user = User::factory()->create();
+
+    $this->actingAs($user);
+
+    $photo = UploadedFile::fake()->image('photo.jpg');
+
+    Livewire::test('pages::settings.profile')
+        ->set('photo', $photo)
+        ->assertHasNoErrors();
+
+    $user->refresh();
+
+    expect($user->profile_photo_path)->not->toBeNull();
+
+    Livewire::test('pages::settings.profile')
+        ->call('removePhoto');
+
+    $user->refresh();
+
+    expect($user->profile_photo_path)->toBeNull();
 });

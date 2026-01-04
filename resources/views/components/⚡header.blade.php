@@ -30,7 +30,12 @@ new class extends Component
     <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" size="sm" />
 
     <flux:navbar class="-mb-px max-lg:hidden">
-        <flux:navbar.item :href="route('dashboard')" :current="request()->routeIs('dashboard')" :accent="false" wire:navigate>
+        <flux:navbar.item
+            :href="route('dashboard')"
+            :current="request()->routeIs('dashboard')"
+            :accent="false"
+            wire:navigate
+        >
             Dashboard
         </flux:navbar.item>
     </flux:navbar>
@@ -41,6 +46,7 @@ new class extends Component
     <flux:dropdown position="top" align="end">
         <flux:profile
             class="cursor-pointer"
+            :avatar="auth()->user()->profile_photo_url"
             :initials="auth()->user()->initials()"
             avatar:size="xs"
             :chevron="false"
@@ -51,20 +57,10 @@ new class extends Component
                 <flux:menu.item :href="route('profile.edit')" icon="user" icon:variant="micro" wire:navigate>
                     Profile
                 </flux:menu.item>
-                <flux:menu.item
-                    :href="route('user-password.edit')"
-                    icon="key"
-                    icon:variant="micro"
-                    wire:navigate
-                >
+                <flux:menu.item :href="route('user-password.edit')" icon="key" icon:variant="micro" wire:navigate>
                     Password
                 </flux:menu.item>
-                <flux:menu.item
-                    :href="route('two-factor.show')"
-                    icon="shield-check"
-                    icon:variant="micro"
-                    wire:navigate
-                >
+                <flux:menu.item :href="route('two-factor.show')" icon="shield-check" icon:variant="micro" wire:navigate>
                     Two-Factor Auth
                 </flux:menu.item>
                 <flux:menu.item
@@ -94,12 +90,7 @@ new class extends Component
                 >
                     Members
                 </flux:menu.item>
-                <flux:menu.item
-                    :href="route('teams.create')"
-                    icon="plus"
-                    icon:variant="micro"
-                    wire:navigate
-                >
+                <flux:menu.item :href="route('teams.create')" icon="plus" icon:variant="micro" wire:navigate>
                     Create new team
                 </flux:menu.item>
             </flux:menu.group>

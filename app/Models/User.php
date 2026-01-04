@@ -27,6 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'current_team_id',
+        'profile_photo_path',
     ];
 
     /**
