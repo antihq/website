@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Features;
 use Livewire\Livewire;
 
+use function Pest\Laravel\actingAs;
+
 beforeEach(function () {
     if (! Features::canManageTwoFactorAuthentication()) {
         $this->markTestSkipped('Two-factor authentication is not enabled.');
@@ -21,14 +23,14 @@ it('renders successfully', function () {
 
     Auth::login($user);
 
-    Livewire::test('pages::settings.two-factor')
+    Livewire::test('pages::account.two-factor')
         ->assertStatus(200);
 });
 
 it('two factor settings page can be rendered', function () {
     $user = User::factory()->withPersonalTeam()->withoutTwoFactor()->create();
 
-    $this->actingAs($user)
+    actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
         ->get(route('two-factor.show'))
         ->assertOk()
@@ -39,7 +41,7 @@ it('two factor settings page can be rendered', function () {
 it('two factor settings page requires password confirmation when enabled', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)
+    $response = actingAs($user)
         ->get(route('two-factor.show'));
 
     $response->assertRedirect(route('password.confirm'));
@@ -50,7 +52,7 @@ it('two factor settings page returns forbidden response when two factor is disab
 
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)
+    $response = actingAs($user)
         ->withSession(['auth.password_confirmed_at' => time()])
         ->get(route('two-factor.show'));
 
@@ -66,9 +68,9 @@ it('two factor authentication disabled when confirmation abandoned between reque
         'two_factor_confirmed_at' => null,
     ])->save();
 
-    $this->actingAs($user);
+    actingAs($user);
 
-    $component = Livewire::test('pages::settings.two-factor');
+    $component = Livewire::test('pages::account.two-factor');
 
     $component->assertSet('twoFactorEnabled', false);
 

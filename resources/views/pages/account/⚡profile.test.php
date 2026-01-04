@@ -6,29 +6,32 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 
+use function Pest\Laravel\actingAs;
+use function Pest\Laravel\get;
+
 it('renders successfully', function () {
     $user = User::factory()->withPersonalTeam()->create();
 
     Auth::login($user);
 
-    Livewire::test('pages::settings.profile')
+    Livewire::test('pages::account.profile')
         ->assertStatus(200);
 });
 
 it('profile page is displayed', function () {
     $user = User::factory()->withPersonalTeam()->create();
 
-    $this->actingAs($user);
+    actingAs($user);
 
-    $this->get('/settings/profile')->assertOk();
+    get('/account/profile')->assertOk();
 });
 
 it('profile information can be updated', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user);
+    actingAs($user);
 
-    $response = Livewire::test('pages::settings.profile')
+    $response = Livewire::test('pages::account.profile')
         ->set('name', 'Test User')
         ->set('email', 'test@example.com')
         ->call('updateProfileInformation');
@@ -45,9 +48,9 @@ it('profile information can be updated', function () {
 it('email verification status is unchanged when email address is unchanged', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user);
+    actingAs($user);
 
-    $response = Livewire::test('pages::settings.profile')
+    $response = Livewire::test('pages::account.profile')
         ->set('name', 'Test User')
         ->set('email', $user->email)
         ->call('updateProfileInformation');
@@ -60,9 +63,9 @@ it('email verification status is unchanged when email address is unchanged', fun
 it('user can delete their account', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user);
+    actingAs($user);
 
-    $response = Livewire::test('settings.delete-user-form')
+    $response = Livewire::test('account.delete-user-form')
         ->set('password', 'password')
         ->call('deleteUser');
 
@@ -76,9 +79,9 @@ it('user can delete their account', function () {
 it('correct password must be provided to delete account', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user);
+    actingAs($user);
 
-    $response = Livewire::test('settings.delete-user-form')
+    $response = Livewire::test('account.delete-user-form')
         ->set('password', 'wrong-password')
         ->call('deleteUser');
 
@@ -92,11 +95,11 @@ it('user can upload a profile photo', function () {
 
     $user = User::factory()->create();
 
-    $this->actingAs($user);
+    actingAs($user);
 
     $photo = UploadedFile::fake()->image('photo.jpg');
 
-    Livewire::test('pages::settings.profile')
+    Livewire::test('pages::account.profile')
         ->set('photo', $photo)
         ->assertHasNoErrors();
 
@@ -109,11 +112,11 @@ it('user can upload a profile photo', function () {
 it('profile photo must be an image', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user);
+    actingAs($user);
 
     $file = UploadedFile::fake()->create('document.txt', 100);
 
-    $livewire = Livewire::test('pages::settings.profile');
+    $livewire = Livewire::test('pages::account.profile');
 
     $livewire->assertHasNoErrors();
 
@@ -125,11 +128,11 @@ it('profile photo must be an image', function () {
 it('profile photo must not exceed 10MB', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user);
+    actingAs($user);
 
     $photo = UploadedFile::fake()->image('photo.jpg')->size(10241);
 
-    Livewire::test('pages::settings.profile')
+    Livewire::test('pages::account.profile')
         ->set('photo', $photo)
         ->assertHasErrors(['photo' => 'max']);
 });
@@ -139,11 +142,11 @@ it('user can remove their profile photo', function () {
 
     $user = User::factory()->create();
 
-    $this->actingAs($user);
+    actingAs($user);
 
     $photo = UploadedFile::fake()->image('photo.jpg');
 
-    Livewire::test('pages::settings.profile')
+    Livewire::test('pages::account.profile')
         ->set('photo', $photo)
         ->assertHasNoErrors();
 
@@ -151,7 +154,7 @@ it('user can remove their profile photo', function () {
 
     expect($user->profile_photo_path)->not->toBeNull();
 
-    Livewire::test('pages::settings.profile')
+    Livewire::test('pages::account.profile')
         ->call('removePhoto');
 
     $user->refresh();

@@ -20,13 +20,13 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('teams/{team}', 'pages::teams.show')->name('teams.edit');
     Route::livewire('teams/{team}/members', 'pages::teams.members.index')->name('teams.members.index');
 
-    Route::redirect('settings', 'settings/profile');
+    Route::redirect('account', 'settings/profile');
 
-    Route::livewire('settings/profile', 'pages::settings.profile')->name('profile.edit');
-    Route::livewire('settings/password', 'pages::settings.password')->name('user-password.edit');
-    Route::livewire('settings/appearance', 'pages::settings.appearance')->name('appearance.edit');
+    Route::livewire('account/profile', 'pages::account.profile')->name('profile.edit');
+    Route::livewire('account/password', 'pages::account.password')->name('user-password.edit');
+    Route::livewire('account/appearance', 'pages::account.appearance')->name('appearance.edit');
 
-    Route::livewire('settings/two-factor', 'pages::settings.two-factor')
+    Route::livewire('account/two-factor', 'pages::account.two-factor')
         ->middleware(
             when(
                 Features::canManageTwoFactorAuthentication()

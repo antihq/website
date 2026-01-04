@@ -203,7 +203,7 @@ new #[Title('Profile')] class extends Component
         </div>
 
         <div class="space-y-6">
-            <livewire:settings.delete-user-form />
+            <livewire:account.delete-user-form />
         </div>
     </div>
 </section>
