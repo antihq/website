@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
@@ -32,7 +33,7 @@ new #[Title('Profile')] class extends Component
 
         Auth::user()->updateProfilePhoto($this->photo);
 
-        $this->dispatch('profile-updated', name: Auth::user()->name);
+        Flux::toast('Profile photo has been saved.', variant: 'success');
 
         $this->photo = null;
     }
@@ -69,7 +70,7 @@ new #[Title('Profile')] class extends Component
 
         $user->save();
 
-        $this->dispatch('profile-updated', name: $user->name);
+        Flux::toast('Profile information has been saved.', variant: 'success');
     }
 
     public function resendVerificationNotification(): void
@@ -196,8 +197,6 @@ new #[Title('Profile')] class extends Component
                     <div class="flex items-center justify-end">
                         <flux:button variant="primary" type="submit" class="w-full" size="sm">Save</flux:button>
                     </div>
-
-                    <x-action-message class="me-3" on="profile-updated">Saved.</x-action-message>
                 </div>
             </form>
         </div>

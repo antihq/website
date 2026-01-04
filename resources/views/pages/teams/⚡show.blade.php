@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Team;
+use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -32,7 +33,7 @@ new class extends Component
             ])
             ->save();
 
-        $this->dispatch('saved');
+        Flux::toast('Team name has been saved.', variant: 'success');
     }
 
     public function delete()
@@ -69,15 +70,22 @@ new class extends Component
             </header>
 
             <form wire:submit="update" class="w-full max-w-lg space-y-8">
-                <flux:input wire:model="name" label="Team name" type="text" size="sm" :readonly="! Gate::check('update', $team)" :variant="! Gate::check('update', $team) ? 'filled' : null" required autofocus />
+                <flux:input
+                    wire:model="name"
+                    label="Team name"
+                    type="text"
+                    size="sm"
+                    :readonly="! Gate::check('update', $team)"
+                    :variant="! Gate::check('update', $team) ? 'filled' : null"
+                    required
+                    autofocus
+                />
 
                 @if (Gate::check('update', $team))
                     <div class="flex items-center gap-4">
                         <div class="flex items-center justify-end">
                             <flux:button variant="primary" type="submit" class="w-full" size="sm">Save</flux:button>
                         </div>
-
-                        <x-action-message class="me-3" on="saved">Saved.</x-action-message>
                     </div>
                 @endif
             </form>
@@ -97,7 +105,9 @@ new class extends Component
                     <div class="space-y-6">
                         <div>
                             <flux:heading size="lg">Delete team?</flux:heading>
-                            <flux:text class="mt-2">You're about to delete this team. This action cannot be reversed.</flux:text>
+                            <flux:text class="mt-2">
+                                You're about to delete this team. This action cannot be reversed.
+                            </flux:text>
                         </div>
                         <div class="flex gap-2">
                             <flux:spacer />
