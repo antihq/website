@@ -61,7 +61,7 @@ new class extends Component
                     Password
                 </flux:menu.item>
                 <flux:menu.item :href="route('two-factor.show')" icon="shield-check" icon:variant="micro" wire:navigate>
-                    Two-Factor Auth
+                    Two-Factor auth
                 </flux:menu.item>
                 <flux:menu.item
                     :href="route('appearance.edit')"
