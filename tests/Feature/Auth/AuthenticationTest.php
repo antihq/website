@@ -3,16 +3,16 @@
 use App\Models\User;
 use Laravel\Fortify\Features;
 
-test('login screen can be rendered', function () {
-    $response = $this->get(route('login'));
+it('can render login screen', function () {
+    $response = get(route('login'));
 
     $response->assertStatus(200);
 });
 
-test('users can authenticate using the login screen', function () {
+it('can authenticate using the login screen', function () {
     $user = User::factory()->withoutTwoFactor()->create();
 
-    $response = $this->post(route('login.store'), [
+    $response = post(route('login.store'), [
         'email' => $user->email,
         'password' => 'password',
     ]);
@@ -21,10 +21,10 @@ test('users can authenticate using the login screen', function () {
         ->assertSessionHasNoErrors()
         ->assertRedirect(route('dashboard', absolute: false));
 
-    $this->assertAuthenticated();
+    assertAuthenticated();
 });
 
-test('users can not authenticate with invalid password', function () {
+it('can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
     $response = $this->post(route('login.store'), [
@@ -37,7 +37,7 @@ test('users can not authenticate with invalid password', function () {
     $this->assertGuest();
 });
 
-test('users with two factor enabled are redirected to two factor challenge', function () {
+it('redirects to two factor challenge when two factor is enabled', function () {
     if (! Features::canManageTwoFactorAuthentication()) {
         $this->markTestSkipped('Two-factor authentication is not enabled.');
     }
@@ -57,7 +57,7 @@ test('users with two factor enabled are redirected to two factor challenge', fun
     $this->assertGuest();
 });
 
-test('users can logout', function () {
+it('can logout', function () {
     $user = User::factory()->create();
 
     $response = $this->actingAs($user)->post(route('logout'));
