@@ -71,13 +71,13 @@ new #[Title('Devices')] class extends Component
             <div class="max-w-lg space-y-6">
                 <div class="space-y-3">
                     <flux:input
-                        :value="$loginUrl"
-                        readonly
-                        copyable
                         label="Login link"
+                        :value="$loginUrl"
+                        variant="filled"
                         description="Share this link with yourself to automatically log in on another device."
                         description:trailing="Link expires in 15 minutes."
-                        variant="filled"
+                        readonly
+                        copyable
                     />
                 </div>
 
@@ -115,7 +115,7 @@ new #[Title('Devices')] class extends Component
 
             <div class="flex justify-center">
                 <div
-                    class="relative aspect-square w-64 overflow-hidden rounded-lg border border-stone-200 dark:border-stone-700"
+                    class="relative aspect-square w-64 overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-700"
                 >
                     <div class="flex h-full items-center justify-center bg-white p-4">
                         <div class="rounded bg-white p-3">
