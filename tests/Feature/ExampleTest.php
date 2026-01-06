@@ -1,7 +1,7 @@
 <?php
 
-test('returns a successful response', function () {
+test('redirects to dashboard', function () {
     $response = $this->get('/');
 
-    $response->assertStatus(200);
+    $response->assertRedirect('/dashboard');
 });

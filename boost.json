@@ -1,10 +1,5 @@
 {
-    "agents": [
-        "opencode"
-    ],
-    "editors": [
-        "opencode"
-    ],
-    "guidelines": [],
-    "herd_mcp": true
+    "agents": ["opencode"],
+    "editors": ["opencode"],
+    "guidelines": []
 }
