@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -23,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('account/profile', 'pages::account.profile')->name('profile.edit');
     Route::livewire('account/password', 'pages::account.password')->name('user-password.edit');
     Route::livewire('account/appearance', 'pages::account.appearance')->name('appearance.edit');
+    Route::livewire('account/devices', 'pages::account.devices')->middleware(['password.confirm'])->name('devices.create');
 
     Route::livewire('account/two-factor', 'pages::account.two-factor')
         ->middleware(
@@ -35,3 +39,13 @@ Route::middleware(['auth'])->group(function () {
         )
         ->name('two-factor.show');
 });
+
+Route::get('device-login/{user}', function (Request $request, User $user) {
+    if (! $request->hasValidSignature()) {
+        abort(401);
+    }
+
+    Auth::login($user);
+
+    return redirect()->route('dashboard');
+})->name('device-login')->middleware('signed');
