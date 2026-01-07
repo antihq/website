@@ -8,7 +8,7 @@ use Livewire\Livewire;
 
 use function Pest\Laravel\actingAs;
 
-test('team members can be invited to team', function () {
+it('invites team members to team', function () {
     if (! Features::sendsTeamInvitations()) {
         $this->markTestSkipped('Team invitations not enabled.');
     }
@@ -28,7 +28,7 @@ test('team members can be invited to team', function () {
     expect($user->currentTeam->fresh()->teamInvitations)->toHaveCount(1);
 });
 
-test('team member invitations can be cancelled', function () {
+it('cancels team member invitations', function () {
     if (! Features::sendsTeamInvitations()) {
         $this->markTestSkipped('Team invitations not enabled.');
     }
@@ -52,7 +52,7 @@ test('team member invitations can be cancelled', function () {
     expect($user->currentTeam->fresh()->teamInvitations)->toHaveCount(0);
 });
 
-test('team members can be removed from teams', function () {
+it('removes team members from teams', function () {
     actingAs($user = User::factory()->withPersonalTeam()->create());
 
     $user->currentTeam->users()->attach(
@@ -66,7 +66,7 @@ test('team members can be removed from teams', function () {
     expect($user->currentTeam->fresh()->users)->toHaveCount(0);
 });
 
-test('only team owner can remove team members', function () {
+it('prevents non-owners from removing team members', function () {
     $user = User::factory()->withPersonalTeam()->create();
 
     $user->currentTeam->users()->attach(
@@ -80,7 +80,7 @@ test('only team owner can remove team members', function () {
         ->assertStatus(403);
 });
 
-test('users can leave teams', function () {
+it('allows users to leave teams', function () {
     $user = User::factory()->withPersonalTeam()->create();
 
     $user->currentTeam->users()->attach(
@@ -95,7 +95,7 @@ test('users can leave teams', function () {
     expect($user->currentTeam->fresh()->users)->toHaveCount(0);
 });
 
-test('team owners cant leave their own team', function () {
+it('prevents team owners from leaving their own team', function () {
     actingAs($user = User::factory()->withPersonalTeam()->create());
 
     Livewire::test('pages::teams.members.index', ['team' => $user->currentTeam])

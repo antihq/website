@@ -7,7 +7,7 @@ use Livewire\Livewire;
 
 use function Pest\Laravel\actingAs;
 
-test('api token permissions can be updated', function () {
+it('updates api token permissions', function () {
     if (! Features::hasApiFeatures()) {
         $this->markTestSkipped('API support is not enabled.');
     }

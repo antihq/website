@@ -5,7 +5,7 @@ use Livewire\Livewire;
 
 use function Pest\Laravel\actingAs;
 
-test('other browser sessions can be logged out', function () {
+it('logs out other browser sessions', function () {
     actingAs(User::factory()->create());
 
     Livewire::test('pages::sessions.index')

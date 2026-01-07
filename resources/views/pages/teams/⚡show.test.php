@@ -17,7 +17,7 @@ it('can update team names', function () {
     expect($user->currentTeam->fresh()->name)->toEqual('Test Team');
 });
 
-test('teams can be deleted', function () {
+it('deletes teams', function () {
     actingAs($user = User::factory()->withPersonalTeam()->create());
 
     $user->ownedTeams()->save($team = Team::factory()->make([
@@ -35,7 +35,7 @@ test('teams can be deleted', function () {
     expect($otherUser->fresh()->teams)->toHaveCount(0);
 });
 
-test('personal teams cant be deleted', function () {
+it('prevents deletion of personal teams', function () {
     actingAs($user = User::factory()->withPersonalTeam()->create());
 
     Livewire::test('pages::teams.show', ['team' => $user->currentTeam])
@@ -45,7 +45,7 @@ test('personal teams cant be deleted', function () {
     expect($user->currentTeam->fresh())->not->toBeNull();
 });
 
-test('delete modal is shown for non-personal teams', function () {
+it('shows delete modal for non-personal teams', function () {
     actingAs($user = User::factory()->withPersonalTeam()->create());
 
     $user->ownedTeams()->save($team = Team::factory()->make([
@@ -60,7 +60,7 @@ test('delete modal is shown for non-personal teams', function () {
         ->assertSee('Delete team', false);
 });
 
-test('delete modal is not shown for personal teams', function () {
+it('hides delete modal for personal teams', function () {
     actingAs($user = User::factory()->withPersonalTeam()->create());
 
     Livewire::test('pages::teams.show', ['team' => $user->currentTeam])

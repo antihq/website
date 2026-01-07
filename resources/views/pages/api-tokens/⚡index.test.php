@@ -7,7 +7,7 @@ use Livewire\Livewire;
 
 use function Pest\Laravel\actingAs;
 
-test('api tokens can be created', function () {
+it('creates api tokens', function () {
     if (! Features::hasApiFeatures()) {
         $this->markTestSkipped('API support is not enabled.');
     }
@@ -28,7 +28,7 @@ test('api tokens can be created', function () {
     expect($user->fresh()->tokens->first()->can('delete'))->toBeFalse();
 });
 
-test('api tokens can be deleted', function () {
+it('deletes api tokens', function () {
     if (! Features::hasApiFeatures()) {
         $this->markTestSkipped('API support is not enabled.');
     }

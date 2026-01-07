@@ -5,7 +5,7 @@ use Livewire\Livewire;
 
 use function Pest\Laravel\actingAs;
 
-test('teams can be created', function () {
+it('creates teams', function () {
     actingAs($user = User::factory()->withPersonalTeam()->create());
 
     Livewire::test('pages::teams.create')

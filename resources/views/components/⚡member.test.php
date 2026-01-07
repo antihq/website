@@ -5,7 +5,7 @@ use Livewire\Livewire;
 
 use function Pest\Laravel\actingAs;
 
-test('team member roles can be updated', function () {
+it('updates team member roles', function () {
     actingAs($user = User::factory()->withPersonalTeam()->create());
 
     $user->currentTeam->users()->attach(
@@ -20,7 +20,7 @@ test('team member roles can be updated', function () {
     ))->toBeTrue();
 });
 
-test('only team owner can update team member roles', function () {
+it('prevents non-owners from updating team member roles', function () {
     $user = User::factory()->withPersonalTeam()->create();
 
     $user->currentTeam->users()->attach(
