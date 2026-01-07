@@ -132,9 +132,9 @@ new #[Title('Profile')] class extends Component
                 </flux:file-upload>
 
                 <div class="flex-1 space-y-3">
-                    <div>
-                        <flux:heading>Profile photo</flux:heading>
-                        <flux:text class="text-sm">JPG, PNG, or GIF up to 10MB</flux:text>
+                    <div class="space-y-2">
+                        <flux:label>Profile photo</flux:label>
+                        <flux:text>JPG, PNG, or GIF up to 10MB</flux:text>
                     </div>
 
                     @if ($photo && ! $errors->has('photo'))

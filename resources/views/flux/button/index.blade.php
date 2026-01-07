@@ -62,7 +62,7 @@ if ($loading && $type !== 'submit' && ! $isJsMethod) {
 }
 
 $classes = Flux::classes()
-    ->add('relative items-center font-medium justify-center gap-2 whitespace-nowrap')
+    ->add('relative items-center font-semibold justify-center gap-2 whitespace-nowrap')
     ->add('disabled:opacity-75 dark:disabled:opacity-75 disabled:cursor-default disabled:pointer-events-none')
     ->add(match ($align) {
         'start' => 'justify-start',
@@ -70,11 +70,11 @@ $classes = Flux::classes()
         'end' => 'justify-end',
     })
     ->add(match ($size) { // Size...
-        'base' => 'h-9 text-base/6 sm:text-sm/6 rounded-lg' . ' ' . (
+        'base' => 'py-[calc(--spacing(2.5)-1px)] sm:py-[calc(--spacing(1.5)-1px)] text-base/6 sm:text-sm/6 rounded-lg' . ' ' . (
             $square
                 ? 'w-9'
                 // If we have an icon, we want to reduce the padding on the side that has the icon...
-                : ($iconLeading && $iconLeading !== '' ? 'ps-2' : 'ps-3') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-2' : 'pe-3')
+                : ($iconLeading && $iconLeading !== '' ? 'ps-[calc(--spacing(2.5)-1px)] sm:ps-[calc(--spacing(2.5)-1px)]' : 'ps-[calc(--spacing(3.5)-1px)] sm:ps-[calc(--spacing(3)-1px)]') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-2' : 'pe-3')
         ),
         'sm' => 'h-8 text-sm rounded-md' . ' ' . ($square ? 'w-8' : 'px-3'),
         'xs' => 'h-6 text-xs rounded-md' . ' ' . ($square ? 'w-6' : 'px-2'),
@@ -171,36 +171,36 @@ $classes = Flux::classes()
 
 <flux:with-tooltip :$attributes>
     <flux:button-or-link-pure :$type :attributes="$attributes->class($classes)" data-flux-button>
-        <?php if ($loading): ?>
+        <?php if ($loading) { ?>
             <div class="absolute inset-0 flex items-center justify-center opacity-0" data-flux-loading-indicator>
                 <flux:icon icon="loading" :variant="$iconVariant" :class="$iconClasses" />
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if (is_string($iconLeading) && $iconLeading !== ''): ?>
+        <?php if (is_string($iconLeading) && $iconLeading !== '') { ?>
             <flux:icon :icon="$iconLeading" :variant="$iconVariant" :class="$iconClasses" />
-        <?php elseif ($iconLeading): ?>
+        <?php } elseif ($iconLeading) { ?>
             {{ $iconLeading }}
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if (($loading || $iconLeading || $iconTrailing) && ! $slot->isEmpty()): ?>
+        <?php if (($loading || $iconLeading || $iconTrailing) && ! $slot->isEmpty()) { ?>
             {{-- If we have a loading indicator, we need to wrap it in a span so it can be a target of *:opacity-0... --}}
             {{-- Also, if we have an icon, we need to wrap it in a span so it can be recognized as a child of the button for :first-child selectors... --}}
             <span>{{ $slot }}</span>
-        <?php else: ?>
+        <?php } else { ?>
             {{ $slot }}
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if ($kbd): ?>
+        <?php if ($kbd) { ?>
             <div class="text-xs text-zinc-400 dark:text-zinc-400">{{ $kbd }}</div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
+        <?php if (is_string($iconTrailing) && $iconTrailing !== '') { ?>
             {{-- Adding the extra margin class inline on the icon component below was causing a double up, so it needs to be added here first... --}}
             <?php $iconClasses->add($square ? '' : '-ms-1'); ?>
             <flux:icon :icon="$iconTrailing" :variant="$iconTrailingVariant" :class="$iconTrailingClasses" />
-        <?php elseif ($iconTrailing): ?>
+        <?php } elseif ($iconTrailing) { ?>
             {{ $iconTrailing }}
-        <?php endif; ?>
+        <?php } ?>
     </flux:button-or-link-pure>
 </flux:with-tooltip>
