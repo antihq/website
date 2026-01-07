@@ -194,7 +194,7 @@ new class extends Component
 ?>
 
 <section class="mx-auto max-w-6xl space-y-8">
-    <flux:heading size="lg">Team members</flux:heading>
+    <flux:heading size="xl">Team members</flux:heading>
 
     <div class="space-y-14">
         @if ($team->users->isNotEmpty())
@@ -213,10 +213,10 @@ new class extends Component
         @endif
 
         @if (Gate::check('addTeamMember', $team))
-            <div class="space-y-8">
-                <header>
+            <div class="space-y-6">
+                <header class="space-y-1">
                     <flux:heading>Add team member</flux:heading>
-                    <flux:text class="mt-1">
+                    <flux:text>
                         @if (Features::sendsTeamInvitations())
                             Add a new team member to your team, allowing them to collaborate with you.
                         @else
@@ -231,7 +231,6 @@ new class extends Component
                         type="email"
                         label="Email"
                         placeholder="john@example.com"
-                        size="sm"
                         class="max-w-sm"
                         required
                         autofocus
@@ -252,7 +251,7 @@ new class extends Component
 
                     <div class="flex items-center gap-4">
                         <div class="flex items-center justify-end">
-                            <flux:button variant="primary" type="submit" class="w-full" size="sm">
+                            <flux:button variant="primary" type="submit" class="w-full">
                                 Add member
                             </flux:button>
                         </div>
@@ -288,7 +287,6 @@ new class extends Component
                                 @if (Gate::check('removeTeamMember', $team))
                                     <flux:button
                                         wire:click="cancelInvitation({{ $invitation->id }})"
-                                        size="xs"
                                         inset="top bottom"
                                     >
                                         Cancel
@@ -305,11 +303,11 @@ new class extends Component
             <div class="space-y-6">
                 <header class="space-y-1">
                     <flux:heading>Leave team</flux:heading>
-                    <flux:text class="mb-6">Are you sure you want to leave this team?</flux:text>
+                    <flux:text>Are you sure you want to leave this team?</flux:text>
                 </header>
 
                 <flux:modal.trigger name="leave-team">
-                    <flux:button variant="danger" size="sm">Leave team</flux:button>
+                    <flux:button variant="danger">Leave team</flux:button>
                 </flux:modal.trigger>
 
                 <flux:modal name="leave-team" class="min-w-[22rem]">
@@ -321,9 +319,9 @@ new class extends Component
                         <div class="flex gap-2">
                             <flux:spacer />
                             <flux:modal.close>
-                                <flux:button variant="ghost" size="sm">Cancel</flux:button>
+                                <flux:button variant="ghost">Cancel</flux:button>
                             </flux:modal.close>
-                            <flux:button wire:click="leave" variant="danger" size="sm">Leave team</flux:button>
+                            <flux:button wire:click="leave" variant="danger">Leave team</flux:button>
                         </div>
                     </div>
                 </flux:modal>

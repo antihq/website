@@ -57,13 +57,13 @@ new #[Title('Devices')] class extends Component
 ?>
 
 <section class="mx-auto max-w-6xl space-y-8">
-    <flux:heading size="lg">Devices</flux:heading>
+    <flux:heading size="xl">Devices</flux:heading>
 
     <div class="space-y-14">
-        <div class="space-y-8">
-            <header>
+        <div class="space-y-6">
+            <header class="space-y-1">
                 <flux:heading>Login to other devices</flux:heading>
-                <flux:text class="mt-1">
+                <flux:text>
                     Easily log in to your account on other devices without entering your password.
                 </flux:text>
             </header>
@@ -83,14 +83,13 @@ new #[Title('Devices')] class extends Component
 
                 <div class="flex items-center gap-4">
                     <flux:modal.trigger name="qr-code-modal">
-                        <flux:button icon="qr-code" icon:variant="micro" size="sm">Show QR Code</flux:button>
+                        <flux:button icon="qr-code" icon:variant="micro">Show QR Code</flux:button>
                     </flux:modal.trigger>
 
                     <flux:button
                         icon="arrow-path"
                         icon:variant="micro"
                         variant="outline"
-                        size="sm"
                         wire:click="regenerate"
                     >
                         Regenerate Link

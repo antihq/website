@@ -154,13 +154,13 @@ new #[Title('Two Factor Authentication')] class extends Component
 ?>
 
 <section class="mx-auto max-w-6xl space-y-8">
-    <flux:heading size="lg">Two Factor Authentication</flux:heading>
+    <flux:heading size="xl">Two Factor Authentication</flux:heading>
 
     <div class="space-y-14">
-        <div class="space-y-8">
-            <header>
+        <div class="space-y-6">
+            <header class="space-y-1">
                 <flux:heading>Authentication status</flux:heading>
-                <flux:text class="mt-1">
+                <flux:text>
                     Add an extra layer of security to your account using two-factor authentication.
                 </flux:text>
             </header>
@@ -181,7 +181,6 @@ new #[Title('Two Factor Authentication')] class extends Component
                                 variant="danger"
                                 icon="shield-exclamation"
                                 icon:variant="outline"
-                                size="sm"
                                 wire:click="disable"
                             >
                                 Disable 2FA
@@ -193,7 +192,7 @@ new #[Title('Two Factor Authentication')] class extends Component
                         <div class="flex items-center gap-3">
                             <flux:badge color="red">Disabled</flux:badge>
                         </div>
-                        <flux:text variant="subtle">
+                        <flux:text>
                             When you enable two-factor authentication, you will be prompted for a secure pin during
                             login. This pin can be retrieved from a TOTP-supported application on your phone.
                         </flux:text>
@@ -201,7 +200,6 @@ new #[Title('Two Factor Authentication')] class extends Component
                             variant="primary"
                             icon="shield-check"
                             icon:variant="outline"
-                            size="sm"
                             wire:click="enable"
                         >
                             Enable 2FA
