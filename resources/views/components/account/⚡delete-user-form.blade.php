@@ -45,9 +45,9 @@ new class extends Component
 ?>
 
 <section class="space-y-6">
-    <div class="relative mb-5">
+    <div class="space-y-1">
         <flux:heading>Delete account</flux:heading>
-        <flux:subheading>Delete your account and all of its resources</flux:subheading>
+        <flux:text>Delete your account and all of its resources</flux:text>
     </div>
 
     <flux:modal.trigger name="confirm-user-deletion">
@@ -75,7 +75,7 @@ new class extends Component
 
             <div class="flex justify-end space-x-2 rtl:space-x-reverse">
                 <flux:modal.close>
-                    <flux:button size="sm">Cancel</flux:button>
+                    <flux:button variant="ghost">Cancel</flux:button>
                 </flux:modal.close>
 
                 <flux:button variant="danger" type="submit">Delete account</flux:button>
