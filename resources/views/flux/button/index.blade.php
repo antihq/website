@@ -62,7 +62,7 @@ if ($loading && $type !== 'submit' && ! $isJsMethod) {
 }
 
 $classes = Flux::classes()
-    ->add('relative items-center font-medium justify-center gap-2 whitespace-nowrap')
+    ->add('relative items-center font-semibold justify-center gap-2 whitespace-nowrap')
     ->add('disabled:opacity-75 dark:disabled:opacity-75 disabled:cursor-default disabled:pointer-events-none')
     ->add(match ($align) {
         'start' => 'justify-start',
@@ -70,11 +70,11 @@ $classes = Flux::classes()
         'end' => 'justify-end',
     })
     ->add(match ($size) { // Size...
-        'base' => 'h-10 text-sm rounded-lg' . ' ' . (
+        'base' => 'py-[calc(--spacing(2.5)-1px)] sm:py-[calc(--spacing(1.5)-1px)] text-base/6 sm:text-sm/6 rounded-lg' . ' ' . (
             $square
-                ? 'w-10'
+                ? 'w-9'
                 // If we have an icon, we want to reduce the padding on the side that has the icon...
-                : ($iconLeading && $iconLeading !== '' ? 'ps-3' : 'ps-4') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-3' : 'pe-4')
+                : ($iconLeading && $iconLeading !== '' ? 'ps-[calc(--spacing(2.5)-1px)] sm:ps-[calc(--spacing(2.5)-1px)]' : 'ps-[calc(--spacing(3.5)-1px)] sm:ps-[calc(--spacing(3)-1px)]') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-[calc(--spacing(2.5)-1px)] sm:pe-[calc(--spacing(2.5)-1px)]' : 'pe-[calc(--spacing(3.5)-1px)] sm:pe-[calc(--spacing(3)-1px)]')
         ),
         'sm' => 'h-8 text-sm rounded-md' . ' ' . ($square ? 'w-8' : 'px-3'),
         'xs' => 'h-6 text-xs rounded-md' . ' ' . ($square ? 'w-6' : 'px-2'),
@@ -142,7 +142,7 @@ $classes = Flux::classes()
         'zinc' => '[--color-accent:var(--color-zinc-800)] [--color-accent-content:var(--color-zinc-800)] [--color-accent-foreground:var(--color-white)] dark:[--color-accent:var(--color-white)] dark:[--color-accent-content:var(--color-white)] dark:[--color-accent-foreground:var(--color-zinc-800)]',
         'neutral' => '[--color-accent:var(--color-neutral-800)] [--color-accent-content:var(--color-neutral-800)] [--color-accent-foreground:var(--color-white)] dark:[--color-accent:var(--color-white)] dark:[--color-accent-content:var(--color-white)] dark:[--color-accent-foreground:var(--color-neutral-800)]',
         'stone' => '[--color-accent:var(--color-stone-800)] [--color-accent-content:var(--color-stone-800)] [--color-accent-foreground:var(--color-white)] dark:[--color-accent:var(--color-white)] dark:[--color-accent-content:var(--color-white)] dark:[--color-accent-foreground:var(--color-stone-800)]',
-        'red' => '[--color-accent:var(--color-red-500)] [--color-accent-content:var(--color-red-600)] [--color-accent-foreground:var(--color-white)] dark:[--color-accent:var(--color-red-500)] dark:[--color-accent-content:var(--color-red-400)] dark:[--color-accent-foreground:var(--color-white)]',
+        'red' => '[--color-accent:var(--color-red-600)] [--color-accent-content:var(--color-red-600)] [--color-accent-foreground:var(--color-white)] dark:[--color-accent:var(--color-red-600)] dark:[--color-accent-content:var(--color-red-400)] dark:[--color-accent-foreground:var(--color-white)]',
         'orange' => '[--color-accent:var(--color-orange-500)] [--color-accent-content:var(--color-orange-600)] [--color-accent-foreground:var(--color-white)] dark:[--color-accent:var(--color-orange-400)] dark:[--color-accent-content:var(--color-orange-400)] dark:[--color-accent-foreground:var(--color-orange-950)]',
         'amber' => '[--color-accent:var(--color-amber-400)] [--color-accent-content:var(--color-amber-600)] [--color-accent-foreground:var(--color-amber-950)] dark:[--color-accent:var(--color-amber-400)] dark:[--color-accent-content:var(--color-amber-400)] dark:[--color-accent-foreground:var(--color-amber-950)]',
         'yellow' => '[--color-accent:var(--color-yellow-400)] [--color-accent-content:var(--color-yellow-600)] [--color-accent-foreground:var(--color-yellow-950)] dark:[--color-accent:var(--color-yellow-400)] dark:[--color-accent-content:var(--color-yellow-400)] dark:[--color-accent-foreground:var(--color-yellow-950)]',
