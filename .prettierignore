@@ -8,4 +8,4 @@ public/
 **/.git
 package-lock.json
 composer.lock
-resources/views/flux/**/*.blade.php
+resources/views/flux/
