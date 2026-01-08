@@ -23,7 +23,7 @@
             <div class="relative">
                 <flux:input
                     name="password"
-                    :label="'Password'"
+                    label="Password"
                     type="password"
                     required
                     autocomplete="current-password"

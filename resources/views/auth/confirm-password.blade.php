@@ -12,11 +12,10 @@
 
             <flux:input
                 name="password"
-                :label="'Password'"
+                label="Password"
                 type="password"
                 required
                 autocomplete="current-password"
-                :placeholder="'Password'"
                 viewable
             />
 

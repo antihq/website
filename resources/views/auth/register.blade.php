@@ -17,7 +17,6 @@
                 required
                 autofocus
                 autocomplete="email"
-                placeholder="email@example.com"
             />
 
             <!-- Name -->
@@ -28,17 +27,15 @@
                 type="text"
                 required
                 autocomplete="name"
-                :placeholder="'Full name'"
             />
 
             <!-- Password -->
             <flux:input
                 name="password"
-                :label="'Password'"
+                label="Password"
                 type="password"
                 required
                 autocomplete="new-password"
-                :placeholder="'Password'"
                 viewable
             />
 

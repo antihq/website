@@ -14,7 +14,7 @@
             <flux:input
                 name="email"
                 value="{{ request('email') }}"
-                :label="'Email'"
+                label="Email"
                 type="email"
                 required
                 autocomplete="email"
@@ -23,22 +23,20 @@
             <!-- Password -->
             <flux:input
                 name="password"
-                :label="'Password'"
+                label="Password"
                 type="password"
                 required
                 autocomplete="new-password"
-                :placeholder="'Password'"
                 viewable
             />
 
             <!-- Confirm Password -->
             <flux:input
                 name="password_confirmation"
-                :label="'Confirm password'"
+                label="Confirm password"
                 type="password"
                 required
                 autocomplete="new-password"
-                :placeholder="'Confirm password'"
                 viewable
             />
 
