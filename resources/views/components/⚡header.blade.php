@@ -4,7 +4,8 @@ use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-new class extends Component {
+new class extends Component
+{
     public ?int $team = null;
 
     public function mount(): void
