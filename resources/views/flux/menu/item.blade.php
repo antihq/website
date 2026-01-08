@@ -30,7 +30,7 @@ $trailingIconClasses = Flux::classes()
 
 $classes = Flux::classes()
     ->add('flex items-center px-3.5 py-2.5 w-full focus:outline-hidden sm:px-3 sm:py-1.5')
-    ->add('rounded-md')
+    ->add('rounded-lg')
     ->add('text-start text-base/6 sm:text-sm/6')
     ->add('[&[disabled]]:opacity-50')
     ->add(match ($variant) {
