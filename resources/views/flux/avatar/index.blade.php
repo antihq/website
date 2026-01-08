@@ -60,18 +60,18 @@ if ($hasTextContent && $color === 'auto') {
 
 $classes = Flux::classes()
     ->add(match($size) {
-        'xl' => '[:where(&)]:size-16 [:where(&)]:text-base',
-        'lg' => '[:where(&)]:size-12 [:where(&)]:text-base',
-        default => '[:where(&)]:size-10 [:where(&)]:text-sm',
-        'sm' => '[:where(&)]:size-8 [:where(&)]:text-sm',
-        'xs' => '[:where(&)]:size-6 [:where(&)]:text-xs',
+        'xl' => '[:where(&)]:size-17 sm:[:where(&)]:size-16 [:where(&)]:text-base',
+        'lg' => '[:where(&)]:size-13 sm:[:where(&)]:size-12 [:where(&)]:text-base',
+        default => '[:where(&)]:size-11 sm:[:where(&)]:size-10 [:where(&)]:text-sm',
+        'sm' => '[:where(&)]:size-9 sm:[:where(&)]:size-8 [:where(&)]:text-sm',
+        'xs' => '[:where(&)]:size-7 sm:[:where(&)]:size-6 [:where(&)]:text-xs',
     })
     ->add($circle ? '[--avatar-radius:calc(infinity*1px)]' : match($size) {
-        'xl' => '[--avatar-radius:var(--radius-xl)]',
-        'lg' => '[--avatar-radius:var(--radius-lg)]',
-        default => '[--avatar-radius:var(--radius-lg)]',
-        'sm' => '[--avatar-radius:var(--radius-md)]',
-        'xs' => '[--avatar-radius:var(--radius-sm)]',
+        'xl' => '[--avatar-radius:20%]',
+        'lg' => '[--avatar-radius:20%]',
+        default => '[--avatar-radius:20%]',
+        'sm' => '[--avatar-radius:20%]',
+        'xs' => '[--avatar-radius:20%]',
     })
     ->add('relative flex-none isolate flex items-center justify-center')
     ->add('[:where(&)]:font-medium')
