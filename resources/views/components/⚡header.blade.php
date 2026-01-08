@@ -27,7 +27,7 @@ new class extends Component
 ?>
 
 <flux:header {{ $attributes }}>
-    <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
+    <flux:sidebar.toggle class="lg:hidden" icon="bars-2" />
 
     <flux:navbar class="-mb-px max-lg:hidden">
         <flux:navbar.item
