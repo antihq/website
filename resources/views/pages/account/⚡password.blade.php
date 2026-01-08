@@ -45,7 +45,7 @@ new #[Title('Password')] class extends Component
     <div class="space-y-14">
         <div class="space-y-6">
             <header class="space-y-1">
-                <flux:heading>Update password</flux:heading>
+                <flux:heading size="lg">Update password</flux:heading>
                 <flux:text>Ensure your account is using a long, random password to stay secure.</flux:text>
             </header>
 

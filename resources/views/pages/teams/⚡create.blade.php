@@ -42,7 +42,7 @@ new class extends Component
     <div class="space-y-14">
         <div class="space-y-6">
             <header class="space-y-1">
-                <flux:heading>Team details</flux:heading>
+                <flux:heading size="lg">Team details</flux:heading>
                 <flux:text>Create a new team to collaborate with others on projects.</flux:text>
             </header>
 

@@ -62,7 +62,7 @@ new #[Title('Devices')] class extends Component
     <div class="space-y-14">
         <div class="space-y-6">
             <header class="space-y-1">
-                <flux:heading>Login to other devices</flux:heading>
+                <flux:heading size="lg">Login to other devices</flux:heading>
                 <flux:text>
                     Easily log in to your account on other devices without entering your password.
                 </flux:text>

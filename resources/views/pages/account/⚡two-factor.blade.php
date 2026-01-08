@@ -159,7 +159,7 @@ new #[Title('Two Factor Authentication')] class extends Component
     <div class="space-y-14">
         <div class="space-y-6">
             <header class="space-y-1">
-                <flux:heading>Authentication status</flux:heading>
+                <flux:heading size="lg">Authentication status</flux:heading>
                 <flux:text>
                     Add an extra layer of security to your account using two-factor authentication.
                 </flux:text>

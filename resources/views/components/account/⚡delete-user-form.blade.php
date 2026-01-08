@@ -46,7 +46,7 @@ new class extends Component
 
 <section class="space-y-6">
     <div class="space-y-1">
-        <flux:heading>Delete account</flux:heading>
+        <flux:heading size="lg">Delete account</flux:heading>
         <flux:text>Delete your account and all of its resources</flux:text>
     </div>
 

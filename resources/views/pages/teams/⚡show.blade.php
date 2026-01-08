@@ -65,7 +65,7 @@ new class extends Component
     <div class="space-y-14">
         <div class="space-y-6">
             <header class="space-y-1">
-                <flux:heading>Team name</flux:heading>
+                <flux:heading size="lg">Team name</flux:heading>
                 <flux:text>The name of your team appears on your profile.</flux:text>
             </header>
 
