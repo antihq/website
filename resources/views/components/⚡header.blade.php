@@ -50,6 +50,7 @@ new class extends Component
             :initials="auth()->user()->initials()"
             avatar:size="xs"
             :chevron="false"
+            class="-me-1.5"
         />
 
         <flux:menu class="min-w-64">
