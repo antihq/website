@@ -2,10 +2,10 @@
 
 @php
 $classes = Flux::classes([
-    'p-2 pb-1 w-full',
+    'px-3.5 pt-2 pb-1 w-full sm:px-3',
     'flex items-center',
-    'text-start text-xs font-medium',
-    'text-zinc-500 font-medium dark:text-zinc-300',
+    'text-start text-sm/5 font-medium sm:text-xs/5',
+    'text-zinc-500 font-medium dark:text-zinc-400',
 ]);
 @endphp
 

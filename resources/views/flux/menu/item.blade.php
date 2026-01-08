@@ -17,30 +17,30 @@
 if ($kbd) $suffix = $kbd;
 
 $iconClasses = Flux::classes()
-    ->add('me-2')
+    ->add('me-2.5 sm:me-2')
     // When using the outline icon variant, we need to size it down to match the default icon sizes...
-    ->add($iconVariant === 'outline' ? 'size-5' : null)
+    ->add($iconVariant === 'outline' ? 'size-5 sm:size-4' : 'size-5 sm:size-4')
     ;
 
 $trailingIconClasses = Flux::classes()
     ->add('ms-auto text-zinc-400 [[data-flux-menu-item-icon]:hover_&]:text-current')
     // When using the outline icon variant, we need to size it down to match the default icon sizes...
-    ->add($iconVariant === 'outline' ? 'size-5' : null)
+    ->add($iconVariant === 'outline' ? 'size-5 sm:size-4' : 'size-5 sm:size-4')
     ;
 
 $classes = Flux::classes()
-    ->add('flex items-center px-2 py-1.5 w-full focus:outline-hidden')
+    ->add('flex items-center px-3.5 py-2.5 w-full focus:outline-hidden sm:px-3 sm:py-1.5')
     ->add('rounded-md')
-    ->add('text-start text-sm font-medium')
+    ->add('text-start text-base/6 sm:text-sm/6')
     ->add('[&[disabled]]:opacity-50')
     ->add(match ($variant) {
         'danger' => [
             'text-zinc-800 data-active:text-red-600 data-active:bg-red-50 dark:text-white dark:data-active:bg-red-400/20 dark:data-active:text-red-400',
-            '**:data-flux-menu-item-icon:text-zinc-400 dark:**:data-flux-menu-item-icon:text-white/60 [&[data-active]_[data-flux-menu-item-icon]]:text-current',
+            '**:data-flux-menu-item-icon:text-zinc-500 dark:**:data-flux-menu-item-icon:text-zinc-400 [&[data-active]_[data-flux-menu-item-icon]]:text-current',
         ],
         'default' => [
-            'text-zinc-800 data-active:bg-zinc-50 dark:text-white dark:data-active:bg-zinc-600',
-            '**:data-flux-menu-item-icon:text-zinc-400 dark:**:data-flux-menu-item-icon:text-white/60 [&[data-active]_[data-flux-menu-item-icon]]:text-current',
+            'text-zinc-950 data-active:bg-blue-500 data-active:text-white dark:text-white',
+            '**:data-flux-menu-item-icon:text-zinc-500 dark:**:data-flux-menu-item-icon:text-zinc-400 [&[data-active]_[data-flux-menu-item-icon]]:text-current',
         ]
     })
     ;
