@@ -12,7 +12,7 @@ $classes = Flux::classes()
     ->add(match ($size) {
         'xl' => 'text-lg',
         'lg' => 'text-base',
-        default => '[:where(&)]:text-sm',
+        default => '[:where(&)]:text-base/6 sm:[:where(&)]:text-sm/6',
         'sm' => 'text-xs',
     })
     ->add($color ? match($color) {
@@ -36,7 +36,7 @@ $classes = Flux::classes()
     } : match ($variant) {
         'strong' => '[:where(&)]:text-zinc-800 [:where(&)]:dark:text-white',
         'subtle' => '[:where(&)]:text-zinc-400 [:where(&)]:dark:text-white/50',
-        default => '[:where(&)]:text-zinc-500 [:where(&)]:dark:text-white/70',
+        default => '[:where(&)]:text-zinc-500 [:where(&)]:dark:text-zinc-400',
     })
     ;
 @endphp
