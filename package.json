@@ -4,8 +4,7 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite",
-        "prepare": "husky install"
+        "dev": "vite"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.1.11",

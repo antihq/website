@@ -39,8 +39,6 @@ This starter kit provides everything you need to build a modern web application 
 - **Pest v4** - Testing framework (feature, unit, browser)
 - **Laravel Pint** - PHP code formatter
 - **Prettier** - Blade & JS formatter
-- **Husky** - Git hooks
-- **lint-staged** - Pre-commit linting
 
 ## Features
 
@@ -122,7 +120,6 @@ Access via Laravel Herd at `https://livewire-starter-kit.test`
 
 - `npm run dev` - Start Vite dev server with hot reload
 - `npm run build` - Build assets for production
-- `npm run prepare` - Install Husky git hooks
 
 ## Development Workflow
 
@@ -448,17 +445,6 @@ php artisan migrate:fresh
 php artisan test
 ```
 
-### Husky Hooks Not Running
-
-**Error**: Pre-commit hooks not formatting code
-
-**Solution**:
-
-```bash
-npm run prepare
-chmod +x .git/hooks/*
-```
-
 ### Dark Mode Not Persisting
 
 **Issue**: Dark mode resets on page refresh
@@ -610,19 +596,6 @@ npx prettier --write .
 
 # Format specific file types
 npx prettier --write "**/*.{blade.php,js,css,json}"
-```
-
-### Pre-commit Hooks
-
-Husky + lint-staged automatically formats staged files before commit:
-
-- Runs Pint on PHP files
-- Runs Prettier on Blade, JS, CSS files
-
-To install hooks:
-
-```bash
-npm run prepare
 ```
 
 ## Credits & License
