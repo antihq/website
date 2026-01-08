@@ -70,11 +70,15 @@ $classes = Flux::classes()
         'end' => 'justify-end',
     })
     ->add(match ($size) { // Size...
-        'base' => 'py-[calc(--spacing(2.5)-1px)] sm:py-[calc(--spacing(1.5)-1px)] text-base/6 sm:text-sm/6 rounded-lg' . ' ' . (
+        'base' => 'text-base/6 sm:text-sm/6 rounded-lg' . ' ' . (
             $square
-                ? 'w-9'
+                ? 'size-11 sm:size-9'
                 // If we have an icon, we want to reduce the padding on the side that has the icon...
-                : ($iconLeading && $iconLeading !== '' ? 'ps-[calc(--spacing(2.5)-1px)] sm:ps-[calc(--spacing(2.5)-1px)]' : 'ps-[calc(--spacing(3.5)-1px)] sm:ps-[calc(--spacing(3)-1px)]') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-[calc(--spacing(2.5)-1px)] sm:pe-[calc(--spacing(2.5)-1px)]' : 'pe-[calc(--spacing(3.5)-1px)] sm:pe-[calc(--spacing(3)-1px)]')
+                : 'py-[calc(--spacing(2.5)-1px)] sm:py-[calc(--spacing(1.5)-1px)]' . ' ' . ($iconLeading && $iconLeading !== ''
+                    ? 'ps-[calc(--spacing(2.5)-1px)] sm:ps-[calc(--spacing(2.5)-1px)]'
+                    : 'ps-[calc(--spacing(3.5)-1px)] sm:ps-[calc(--spacing(3)-1px)]') . ' ' . ($iconTrailing && $iconTrailing !== ''
+                        ? 'pe-[calc(--spacing(2.5)-1px)] sm:pe-[calc(--spacing(2.5)-1px)]'
+                        : 'pe-[calc(--spacing(3.5)-1px)] sm:pe-[calc(--spacing(3)-1px)]')
         ),
         'sm' => 'h-8 text-sm rounded-md' . ' ' . ($square ? 'w-8' : 'px-3'),
         'xs' => 'h-6 text-xs rounded-md' . ' ' . ($square ? 'w-6' : 'px-2'),
