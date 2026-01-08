@@ -83,17 +83,17 @@ $classes = Flux::classes()
     ->add('w-full border rounded-lg block disabled:shadow-none dark:shadow-none')
     ->add('appearance-none') // Without this, input[type="date"] on mobile doesn't respect w-full...
     ->add(match ($size) {
-        default => 'text-base sm:text-sm py-2 h-10 leading-[1.375rem]', // This makes the height of the input 40px (same as buttons and such...)
+        default => 'text-base/6 sm:text-sm/6 py-[calc(--spacing(2.5)-1px)] sm:py-[calc(--spacing(1.5)-1px)]', // This makes the height of the input 40px (same as buttons and such...)
         'sm' => 'text-sm py-1.5 h-8 leading-[1.125rem]',
         'xs' => 'text-xs py-1.5 h-6 leading-[1.125rem]',
     })
     ->add(match ($hasLeadingIcon) {
         true => 'ps-10',
-        false => 'ps-3',
+        false => 'ps-[calc(--spacing(3.5)-1px)] sm:ps-[calc(--spacing(3)-1px)]',
     })
     ->add(match ($countOfTrailingIcons) {
         // Make sure there's enough padding on the right side of the input to account for all the icons...
-        0 => 'pe-3',
+        0 => 'pe-[calc(--spacing(3.5)-1px)] sm:pe-[calc(--spacing(3)-1px)]',
         1 => 'pe-10',
         2 => 'pe-16',
         3 => 'pe-23',
