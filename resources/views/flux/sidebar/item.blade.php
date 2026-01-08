@@ -26,7 +26,7 @@ $iconClasses = Flux::classes('size-4')
     ->add('[[data-flux-sidebar-item]:hover_&]:text-current!');
 
 $classes = Flux::classes()
-    ->add('px-2 h-11 sm:h-9 relative flex items-center gap-3 rounded-lg')
+    ->add('px-2 h-11 relative flex items-center gap-3 rounded-lg sm:h-9')
     ->add('in-data-flux-sidebar-collapsed-desktop:w-10 in-data-flux-sidebar-collapsed-desktop:justify-center')
     ->add('py-0 text-start w-full px-3 has-data-flux-navlist-badge:not-in-data-flux-sidebar-collapsed-desktop:pe-1.5 my-px')
     ->add('text-zinc-500 dark:text-white/80')

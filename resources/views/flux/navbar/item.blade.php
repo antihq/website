@@ -23,7 +23,7 @@ $square ??= $slot->isEmpty();
 $iconClasses = Flux::classes($square ? 'size-6' : 'size-5');
 
 $classes = Flux::classes()
-    ->add('p-2 flex items-center rounded-lg')
+    ->add('px-2 h-11 flex items-center rounded-lg sm:h-9')
     ->add('relative') // This is here for the "active" bar at the bottom to be positioned correctly...
     ->add($square ? '' : '')
     ->add('text-zinc-950 dark:text-white')
