@@ -1,5 +1,5 @@
 <x-layouts::auth>
-    <div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-8">
         <div
             class="relative h-auto w-full"
             x-cloak
