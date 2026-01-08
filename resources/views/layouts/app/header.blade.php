@@ -7,7 +7,7 @@
         @include('partials.head')
     </head>
     <body class="flex min-h-svh w-full flex-col bg-white lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950">
-        <livewire:header class="px-6!" />
+        <livewire:header />
 
         <!-- Mobile Menu -->
         <flux:sidebar

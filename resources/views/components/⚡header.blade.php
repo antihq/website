@@ -33,7 +33,6 @@ new class extends Component
         <flux:navbar.item
             :href="route('dashboard')"
             :current="request()->routeIs('dashboard')"
-            :accent="false"
             wire:navigate
         >
             Dashboard
