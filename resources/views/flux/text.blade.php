@@ -10,10 +10,10 @@
 @php
 $classes = Flux::classes()
     ->add(match ($size) {
-        'xl' => 'text-lg',
-        'lg' => 'text-base',
-        default => '[:where(&)]:text-sm',
-        'sm' => 'text-xs',
+        'xl' => 'text-2xl/8 sm:text-xl/8',
+        'lg' => 'text-lg/6 sm:text-base/6',
+        default => 'sm:[:where(&)]:text-base/6 sm:[:where(&)]:text-sm/6',
+        'sm' => 'text-sm/5 sm:text-xs/5 ',
     })
     ->add($color ? match($color) {
         'red' => 'text-red-600 dark:text-red-400',
@@ -34,9 +34,9 @@ $classes = Flux::classes()
         'pink' => 'text-pink-600 dark:text-pink-400',
         'rose' => 'text-rose-600 dark:text-rose-400',
     } : match ($variant) {
-        'strong' => '[:where(&)]:text-zinc-800 [:where(&)]:dark:text-white',
-        'subtle' => '[:where(&)]:text-zinc-400 [:where(&)]:dark:text-white/50',
-        default => '[:where(&)]:text-zinc-500 [:where(&)]:dark:text-white/70',
+        'strong' => '[:where(&)]:text-zinc-950 [:where(&)]:dark:text-white',
+        'subtle' => '[:where(&)]:text-zinc-400',
+        default => '[:where(&)]:text-zinc-500 [:where(&)]:dark:text-zinc-400',
     })
     ;
 @endphp

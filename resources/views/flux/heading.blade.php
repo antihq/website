@@ -11,12 +11,12 @@ $classes = Flux::classes()
     ->add('font-medium')
     ->add(match ($accent) {
         true => 'text-[var(--color-accent-content)]',
-        default => '[:where(&)]:text-zinc-800 [:where(&)]:dark:text-white',
+        default => '[:where(&)]:text-zinc-950 [:where(&)]:dark:text-white',
     })
     ->add(match ($size) {
-        'xl' => 'text-2xl [&:has(+[data-flux-subheading])]:mb-2 [[data-flux-subheading]+&]:mt-2',
-        'lg' => 'text-base [&:has(+[data-flux-subheading])]:mb-2 [[data-flux-subheading]+&]:mt-2',
-        default => 'text-sm [&:has(+[data-flux-subheading])]:mb-2 [[data-flux-subheading]+&]:mt-2',
+        'xl' => 'text-2xl/8 sm:text-xl/8 [&:has(+[data-flux-subheading])]:mb-2 [[data-flux-subheading]+&]:mt-2',
+        'lg' => 'text-lg/6 sm:text-base/6 [&:has(+[data-flux-subheading])]:mb-2 [[data-flux-subheading]+&]:mt-2',
+        default => 'text-base/6 sm:text-sm/6 [&:has(+[data-flux-subheading])]:mb-2 [[data-flux-subheading]+&]:mt-2',
     })
     ;
 @endphp
