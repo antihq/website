@@ -1,5 +1,9 @@
 {
-    "agents": ["opencode"],
-    "editors": ["opencode"],
+    "agents": [
+        "opencode"
+    ],
+    "editors": [
+        "opencode"
+    ],
     "guidelines": []
 }
