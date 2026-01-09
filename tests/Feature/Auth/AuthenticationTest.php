@@ -71,3 +71,16 @@ it('can logout', function () {
     $response->assertRedirect(route('home'));
     assertGuest();
 });
+
+it('can not authenticate user with null password', function () {
+    $user = User::factory()->create(['password' => null]);
+
+    $response = post(route('login.store'), [
+        'email' => $user->email,
+        'password' => 'password',
+    ]);
+
+    $response->assertSessionHasErrors();
+
+    assertGuest();
+});

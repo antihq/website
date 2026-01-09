@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
+use Laravel\Fortify\Http\Controllers\NewPasswordController;
+use Laravel\Fortify\RoutePath;
 
 Route::redirect('/', 'dashboard')->name('home');
 
@@ -49,3 +51,9 @@ Route::get('device-login/{user}', function (Request $request, User $user) {
 
     return redirect()->route('dashboard');
 })->name('device-login')->middleware('signed');
+
+Route::get(RoutePath::for('password.reset', '/reset-password/{token}'), [NewPasswordController::class, 'create'])
+    ->name('password.reset');
+
+Route::post(RoutePath::for('password.update', '/reset-password'), [NewPasswordController::class, 'store'])
+    ->name('password.update');

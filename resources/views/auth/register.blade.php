@@ -19,26 +19,6 @@
                 autocomplete="email"
             />
 
-            <!-- Name -->
-            <flux:input
-                name="name"
-                label="Full name"
-                :value="old('name')"
-                type="text"
-                required
-                autocomplete="name"
-            />
-
-            <!-- Password -->
-            <flux:input
-                name="password"
-                label="Password"
-                type="password"
-                required
-                autocomplete="new-password"
-                viewable
-            />
-
             <div class="flex items-center justify-end">
                 <flux:button type="submit" variant="primary" class="w-full">Create account</flux:button>
             </div>

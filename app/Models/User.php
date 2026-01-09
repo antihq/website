@@ -47,10 +47,18 @@ class User extends Authenticatable
      */
     public function initials(): string
     {
-        return Str::of($this->name)
-            ->explode(' ')
-            ->take(2)
-            ->map(fn ($word) => Str::substr($word, 0, 1))
+        if ($this->name) {
+            return Str::of($this->name)
+                ->explode(' ')
+                ->take(2)
+                ->map(fn ($word) => Str::substr($word, 0, 1))
+                ->implode('');
+        }
+
+        return Str::of($this->email)
+            ->explode('@')
+            ->take(1)
+            ->map(fn ($word) => Str::ucfirst(Str::before($word, '.')))
             ->implode('');
     }
 
