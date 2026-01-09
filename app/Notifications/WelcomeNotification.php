@@ -39,7 +39,9 @@ class WelcomeNotification extends Notification implements ShouldQueue
             ->subject('Welcome to '.config('app.name').' - Set your password')
             ->greeting('Welcome!')
             ->line('Get started with your account by setting a password.')
-            ->action('Set your password', route('password.reset', Password::createToken($notifiable)))
+            ->action('Set your password', route('password.reset', ['token' => Password::createToken($notifiable), 'email' => $notifiable->email]))
+            ->line('This link will expire in '.config('auth.passwords.users.expire').' minutes.')
+            ->line('If the link expires, you can request a new one at '.route('password.request').'.')
             ->line('If you didn\'t create an account, you can safely ignore this email.');
     }
 
