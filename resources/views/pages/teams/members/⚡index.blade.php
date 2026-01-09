@@ -200,7 +200,7 @@ new class extends Component
         @if ($team->users->isNotEmpty())
             <div class="space-y-6">
                 <header class="space-y-1">
-                    <flux:heading size="lg">Team members</flux:heading>
+                    <flux:heading>Team members</flux:heading>
                     <flux:text>All team members that currently have access to this team.</flux:text>
                 </header>
 
@@ -215,7 +215,7 @@ new class extends Component
         @if (Gate::check('addTeamMember', $team))
             <div class="space-y-6">
                 <header class="space-y-1">
-                    <flux:heading size="lg">Add team member</flux:heading>
+                    <flux:heading>Add team member</flux:heading>
                     <flux:text>
                         @if (Features::sendsTeamInvitations())
                             Add a new team member to your team, allowing them to collaborate with you.
@@ -251,9 +251,7 @@ new class extends Component
 
                     <div class="flex items-center gap-4">
                         <div class="flex items-center justify-end">
-                            <flux:button variant="primary" type="submit" class="w-full">
-                                Add member
-                            </flux:button>
+                            <flux:button variant="primary" type="submit" class="w-full">Add member</flux:button>
                         </div>
                     </div>
                 </form>
@@ -263,7 +261,7 @@ new class extends Component
         @if ($team->teamInvitations->isNotEmpty() && Gate::check('addTeamMember', $team))
             <div class="space-y-6">
                 <header class="space-y-1">
-                    <flux:heading size="lg">Pending invitations</flux:heading>
+                    <flux:heading>Pending invitations</flux:heading>
                     <flux:text>These people have been invited to your team and haven't accepted yet.</flux:text>
                 </header>
 
@@ -310,18 +308,19 @@ new class extends Component
                     <flux:button variant="danger">Leave team</flux:button>
                 </flux:modal.trigger>
 
-                <flux:modal name="leave-team" class="min-w-[22rem]">
-                    <div class="space-y-6">
-                        <div class="space-y-2">
-                            <flux:heading size="lg">Leave team?</flux:heading>
-                            <flux:text>You're about to leave this team. You'll lose access to all team resources.</flux:text>
+                <flux:modal name="leave-team" class="w-full max-w-xs sm:max-w-md">
+                    <div class="space-y-6 sm:space-y-4">
+                        <div>
+                            <flux:heading>Leave team?</flux:heading>
+                            <flux:text class="mt-2">
+                                You're about to leave this team. You'll lose access to all team resources.
+                            </flux:text>
                         </div>
-                        <div class="flex gap-2">
-                            <flux:spacer />
+                        <div class="flex flex-col-reverse items-center justify-end gap-3 *:w-full sm:flex-row sm:*:w-auto">
                             <flux:modal.close>
-                                <flux:button variant="ghost">Cancel</flux:button>
+                                <flux:button variant="ghost" class="w-full sm:w-auto">Cancel</flux:button>
                             </flux:modal.close>
-                            <flux:button wire:click="leave" variant="danger">Leave team</flux:button>
+                            <flux:button wire:click="leave" variant="primary">Leave team</flux:button>
                         </div>
                     </div>
                 </flux:modal>
