@@ -43,7 +43,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the user's initials
+     * Get user's initials
      */
     public function initials(): string
     {
@@ -60,6 +60,11 @@ class User extends Authenticatable
             ->take(1)
             ->map(fn ($word) => Str::ucfirst(Str::before($word, '.')))
             ->implode('');
+    }
+
+    public function hasPassword(): bool
+    {
+        return ! is_null($this->password);
     }
 
     /**

@@ -21,19 +21,16 @@ new #[Title('Password')] class extends Component
             return;
         }
 
-        $hasPassword = ! is_null($user->password);
+        $rules = [
+            'password' => ['required', 'string', PasswordRule::defaults()],
+        ];
+
+        if ($user->hasPassword()) {
+            $rules['current_password'] = ['required', 'string', 'current_password'];
+        }
 
         try {
-            if ($hasPassword) {
-                $validated = $this->validate([
-                    'current_password' => ['required', 'string', 'current_password'],
-                    'password' => ['required', 'string', PasswordRule::defaults()],
-                ]);
-            } else {
-                $validated = $this->validate([
-                    'password' => ['required', 'string', PasswordRule::defaults()],
-                ]);
-            }
+            $validated = $this->validate($rules);
         } catch (ValidationException $e) {
             $this->reset('current_password', 'password');
 
@@ -57,12 +54,12 @@ new #[Title('Password')] class extends Component
     <div class="space-y-14">
         <div class="space-y-6">
             <header class="space-y-1">
-                <flux:heading size="lg">{{ auth()->user()->password ? 'Update password' : 'Set password' }}</flux:heading>
-                <flux:text>{{ auth()->user()->password ? 'Ensure your account is using a long, random password to stay secure.' : 'Set a password for your account to enhance security.' }}</flux:text>
+                <flux:heading size="lg">{{ auth()->user()->hasPassword() ? 'Update password' : 'Set password' }}</flux:heading>
+                <flux:text>{{ auth()->user()->hasPassword() ? 'Ensure your account is using a long, random password to stay secure.' : 'Set a password for your account to enhance security.' }}</flux:text>
             </header>
 
             <form wire:submit="updatePassword" class="w-full max-w-lg space-y-8">
-                @if(auth()->user()->password)
+                @if(auth()->user()->hasPassword())
                     <flux:input
                         wire:model="current_password"
                         :label="'Current password'"
@@ -73,7 +70,7 @@ new #[Title('Password')] class extends Component
                 @endif
                 <flux:input
                     wire:model="password"
-                    :label="(auth()->user()->password ? 'New password' : 'Password')"
+                    :label="(auth()->user()->hasPassword() ? 'New password' : 'Password')"
                     type="password"
                     required
                     autocomplete="new-password"
