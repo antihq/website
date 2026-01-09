@@ -1,6 +1,6 @@
 <x-layouts::auth>
     <div class="flex flex-col gap-8">
-        <x-auth-header title="Reset password" description="Please enter your new password below" />
+        <x-auth-header title="Set password" description="Please enter your password below" />
 
         <!-- Session Status -->
         <x-auth-session-status class="text-center" :status="session('status')" />
@@ -34,7 +34,7 @@
 
             <div class="flex items-center justify-end">
                 <flux:button type="submit" variant="primary" class="w-full" data-test="reset-password-button">
-                    Reset password
+                    Set password
                 </flux:button>
             </div>
         </form>
