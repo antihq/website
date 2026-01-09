@@ -30,15 +30,7 @@
                 viewable
             />
 
-            <!-- Confirm Password -->
-            <flux:input
-                name="password_confirmation"
-                label="Confirm password"
-                type="password"
-                required
-                autocomplete="new-password"
-                viewable
-            />
+
 
             <div class="flex items-center justify-end">
                 <flux:button type="submit" variant="primary" class="w-full" data-test="reset-password-button">

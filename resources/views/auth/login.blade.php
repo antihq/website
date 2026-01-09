@@ -3,7 +3,7 @@
         <x-auth-header title="Sign in to your account" />
 
         <!-- Session Status -->
-        <x-auth-session-status class="text-center" :status="session('status')" />
+        <x-auth-session-status :status="session('status')" />
 
         <form method="POST" action="{{ route('login.store') }}" class="flex flex-col gap-8">
             @csrf
