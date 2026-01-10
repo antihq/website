@@ -117,7 +117,7 @@ new #[Title('Profile')] class extends Component
                             />
                         @else
                             <!-- Show boring avatar if no file is uploaded -->
-                            <x-boring-avatar :name="auth()->user()->name" variant="beam" :size="80" />
+                            <x-boring-avatar :name="auth()->user()->name ?? auth()->user()->email" variant="beam" size="80" />
                         @endif
 
                         <!-- Corner upload icon -->

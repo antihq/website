@@ -44,7 +44,7 @@ new class extends Component {
                     <flux:avatar :src="auth()->user()->profile_photo_url" size="xs" circle />
                 @else
                     <x-boring-avatar
-                        :name="auth()->user()->name"
+                        :name="auth()->user()->name ?? auth()->user()->email"
                         variant="beam"
                         class="[:where(&)]:size-7 sm:[:where(&)]:size-6"
                     />
