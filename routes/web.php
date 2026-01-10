@@ -10,6 +10,8 @@ use Laravel\Fortify\RoutePath;
 
 Route::redirect('/', 'dashboard')->name('home');
 
+Route::view('site.webmanifest', 'site-webmanifest');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
