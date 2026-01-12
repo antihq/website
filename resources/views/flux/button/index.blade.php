@@ -35,12 +35,12 @@ $iconTrailingVariant ??= $attributes->pluck('icon-trailing:variant', $iconVarian
 
 // When using the outline icon variant, we need to size it down to match the default icon sizes...
 $iconClasses = Flux::classes()
-    ->add($iconVariant === 'outline' ? ($square && $size !== 'xs' ? 'size-5' : 'size-4') : '')
+    ->add($iconVariant === 'outline' ? ($square && $size !== 'xs' ? 'size-5 sm:size-4' : 'size-5 sm:size-4') : 'size-5 sm:size-4')
     ->add($attributes->pluck('icon:class'))
     ;
 
 $iconTrailingClasses = Flux::classes()
-    ->add($iconTrailingVariant === 'outline' ? ($square && $size !== 'xs' ? 'size-5' : 'size-4') : '')
+    ->add($iconTrailingVariant === 'outline' ? ($square && $size !== 'xs' ? 'size-5 sm:size-4' : 'size-5 sm:size-4') : 'size-5 sm:size-4')
     ->add($attributes->pluck('icon-trailing:class'))
     ;
 
@@ -80,7 +80,7 @@ $classes = Flux::classes()
                         ? 'pe-[calc(--spacing(2.5)-1px)] sm:pe-[calc(--spacing(2.5)-1px)]'
                         : 'pe-[calc(--spacing(3.5)-1px)] sm:pe-[calc(--spacing(3)-1px)]')
         ),
-        'sm' => 'h-8 text-sm rounded-md' . ' ' . ($square ? 'w-8' : 'px-3'),
+        'sm' => 'h-9 sm:h-7 text-sm rounded-md' . ' ' . ($square ? 'w-9 sm:w-7' : 'px-3'),
         'xs' => 'h-6 text-xs rounded-md' . ' ' . ($square ? 'w-6' : 'px-2'),
     })
     ->add('inline-flex') // Buttons are inline by default but links are blocks, so inline-flex is needed here to ensure link-buttons are displayed the same as buttons...
