@@ -112,9 +112,9 @@ $classes = Flux::classes()
         'subtle' => 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white',
     })
     ->add(match ($variant) { // Border color...
-        'primary' => 'border border-black/10 dark:border-0',
+        'primary' => 'border border-black/10 dark:border-transparent',
         'outline' => 'border border-zinc-200 hover:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600',
-         default => '',
+         default => 'border border-transparent',
     })
     ->add(match ($variant) { // Shadows...
         'primary' => 'shadow-[inset_0px_1px_--theme(--color-white/.2)]',
