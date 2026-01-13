@@ -9,7 +9,7 @@ new #[Layout('layouts::site')] class extends Component {
 ?>
 
 <flux:main>
-    <div class="flex w-[24rem] flex-col gap-12">
+    <div class="flex w-full max-w-sm flex-col gap-12">
         <flux:text class="flex items-center gap-2">
             <flux:link :href="route('home')" wire:navigate>antihq</flux:link>
             /
