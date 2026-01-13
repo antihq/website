@@ -8,9 +8,7 @@ use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\NewPasswordController;
 use Laravel\Fortify\RoutePath;
 
-Route::redirect('/', 'dashboard')->name('home');
-
-Route::view('site.webmanifest', 'site-webmanifest');
+Route::livewire('/', 'pages::welcome')->name('home');
 
 Route::middleware([
     'auth:sanctum',
