@@ -2,8 +2,8 @@
 
 use function Pest\Laravel\get;
 
-it('redirects to dashboard', function () {
+it('displays welcome page', function () {
     $response = get('/');
 
-    $response->assertRedirect('/dashboard');
+    $response->assertStatus(200)->assertSee('antihq/board');
 });
