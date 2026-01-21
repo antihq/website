@@ -36,12 +36,17 @@ new #[Layout('layouts::site')] class extends Component {
             </flux:text>
         </div>
 
-        <div class="flex flex-col gap-2">
-            <flux:heading level="2" size="lg">antihq/bookkeeping</flux:heading>
-            <flux:text>
-                <flux:link href="https://github.com/antihq/bookkeeping" target="_blank" rel="noopener noreferrer">
-                    A modern Laravel-based personal finance and bookkeeping application
-                </flux:link>.
+        <div>
+            <flux:heading level="2" class="font-medium!">
+                <flux:link href="https://github.com/antihq/bookkeeping" target="_blank" rel="noopener noreferrer" class="font-semibold!">
+                    antihq/bookkeeping
+                </flux:link>
+            </flux:heading>
+            <flux:heading size="lg" class="mt-1">
+                Track your monthly expenses in seconds. No spreadsheets needed.
+            </flux:heading>
+            <flux:text class="mt-2">
+                Enter amount, payee, and hit save—categories and notes are optional.
             </flux:text>
         </div>
 
