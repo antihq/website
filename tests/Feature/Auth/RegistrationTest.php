@@ -1,6 +1,13 @@
 <?php
 
 use App\Models\User;
+use Laravel\Fortify\Features;
+
+beforeEach(function () {
+    if (! in_array(Features::registration(), config('fortify.features'))) {
+        $this->markTestSkipped('Registration is disabled.');
+    }
+});
 
 test('registration screen can be rendered', function () {
     $response = $this->get(route('register'));
