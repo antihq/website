@@ -8,7 +8,7 @@
     <ul class="lowercase ml-4">
         <li><flux:link href="https://2026-05-18-mayfly.antihq.com/" target="_blank">Mayfly</flux:link></li>
         <li><flux:link href="https://2026-05-07-tuner.antihq.com/" target="_blank">Tuner</flux:link></li>
-        <li><flux:link href="https://2026-05-04-glace.antihq.com/" target="_blank">Glace</flux:link></li>
+        <li><flux:link href="https://2026-05-04-glance.antihq.com/" target="_blank">Glance</flux:link></li>
         <li><flux:link href="https://2026-05-14-vault.antihq.com/" target="_blank">Vault</flux:link></li>
     </ul>
 
