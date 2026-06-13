@@ -33,3 +33,8 @@
         --color-accent-foreground: var(--color-white);
     }
 }
+
+@utility font-mono {
+    font-family: var(--font-mono);
+    font-variation-settings: "wdth" 87.5;
+}
