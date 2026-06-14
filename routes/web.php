@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'pages::home')->name('home')->middleware('guest');
 
+Route::view('/vault', 'pages::vault')->name('vault');
+
 Route::prefix('{current_team}')
     ->middleware(['auth', 'verified', EnsureTeamMembership::class])
     ->group(function () {
