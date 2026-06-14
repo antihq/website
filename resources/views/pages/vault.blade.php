@@ -14,6 +14,8 @@
 
         <p class="mt-6 lowercase">it won't generate your 2fa codes. pair it with <flux:link href="https://2fas.com/" target="_blank">2fas</flux:link> — that's what I use.</p>
 
+        <p class="mt-6 lowercase">no autofill built in either. pair it with your browser or os password manager (chrome, macos) for quick fills — vault stays the source of truth. that's how I handle the passwords I type all day: change it in vault first, then mirror it to the built-in, so I'm not opening vault every time.</p>
+
         <dl class="mt-6">
             <dt class="font-bold">is it secure?</dt>
             <dd class="ml-4 lowercase">the db holds your secrets encrypted; they're decrypted with the app key. so yeah — kinda secure. I run my own passwords on it.</dd>
