@@ -1,4 +1,4 @@
-<x-layouts::auth title="Welcome">
+<x-layouts::auth title="welcome">
     <h1 class="font-bold">the anti headquarters software company</h1>
 
     <h2 class="mt-6 font-bold">projects</h2>
